@@ -25,6 +25,16 @@ const linking: LinkingOptions<RootStackParamList> = {
               TabTwoScreen: 'two',
             },
           },
+          Authorize: {
+            screens: {
+              AuthorizeScreen: 'auth',
+            }
+          },
+          Diet: {
+            screens: {
+              DietScreen: 'diet'
+            }
+          }
         },
       },
       Modal: 'modal',
