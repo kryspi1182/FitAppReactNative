@@ -11,23 +11,14 @@ type Props = {
 };
 
 const DayDietBox: React.FC<Props> = (props) => {
+    //console.log(props.meals);
     return (<View>
         {(props.meals.length === 5 && <List.Accordion title={props.day}>
-            <List.Item title="Breakfast">
-                <MealWithProductsItem label="Breakfast" meal={props.meals[0]}/>
-            </List.Item>
-            <List.Item title="Second breakfast">
-                <MealWithProductsItem label="Second breakfast" meal={props.meals[1]}/>
-            </List.Item>
-            <List.Item title="Lunch">
-                <MealWithProductsItem label="Lunch" meal={props.meals[2]}/>
-            </List.Item>
-            <List.Item title="Snack">
-                <MealWithProductsItem label="Snack" meal={props.meals[3]}/>
-            </List.Item>
-            <List.Item title="Dinner">
-                <MealWithProductsItem label="Dinner" meal={props.meals[4]}/>
-            </List.Item>
+            <MealWithProductsItem label="Breakfast" meal={props.meals[0]}/>
+            <MealWithProductsItem label="Second breakfast" meal={props.meals[1]}/>
+            <MealWithProductsItem label="Lunch" meal={props.meals[2]}/>
+            <MealWithProductsItem label="Snack" meal={props.meals[3]}/>
+            <MealWithProductsItem label="Dinner" meal={props.meals[4]}/>
         </List.Accordion>)}
         {(props.meals.length !== 5 && <Text>Wrong data format</Text>)}
     </View>)

@@ -29,8 +29,11 @@ const productsSlice = createSlice({
     reducers: {},
     extraReducers: builder => {
         builder.addCase(fetchProducts.fulfilled, (state, action: PayloadAction<Array<Product>>) => {
-            if(action.payload)
+            if(action.payload) {
+                //console.log(action.payload);
                 productsAdapter.upsertMany(state, action);
+            }
+                
         })
     }
 });

@@ -18,7 +18,7 @@ const redirectUri = AuthSession.makeRedirectUri({
   useProxy
 });
 
-export default function App() {
+const Authorize: React.FC = () => {
   const [ready, setReady] = React.useState(false);
   const [acc_token, setAcc_token] = React.useState("");
   const [userInfo, setUserInfo] = React.useState({} as UserIdentityInfo);
@@ -82,3 +82,5 @@ export default function App() {
     </View>
   );
 }
+
+export default Authorize;

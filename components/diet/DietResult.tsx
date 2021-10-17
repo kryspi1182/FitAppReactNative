@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { EntityId } from '@reduxjs/toolkit';
-import { Button, Text, View } from 'react-native';
+import { Button, Text, View, ScrollView, StyleSheet } from 'react-native';
 
 import { fetchBreakfast, fetchSnack, fetchDinner, fetchLunch, selectAllUserMeals } from '../../store/userMealsSlice';
 import WeekDietBox from './WeekDietBox';
@@ -61,7 +61,7 @@ const DietResult: React.FC<Props> = (props) => {
             
     }, [props.generateDiet]);
 
-    return (<View>
+    return (<ScrollView contentContainerStyle={styles.container}>
         {((dietReady 
         && dietBreakfast.length === 7
         && dietSecondBreakfast.length === 7
@@ -74,7 +74,14 @@ const DietResult: React.FC<Props> = (props) => {
             lunches={dietLunch}
             snacks={dietSnack}
             dinners={dietDinner}/>)}
-    </View>)
+    </ScrollView>)
 };
+
+const styles = StyleSheet.create({
+    container: {
+      alignItems: 'stretch',
+      justifyContent: 'center',
+    },
+  });
 
 export default DietResult;

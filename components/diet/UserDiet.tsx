@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { EntityId } from '@reduxjs/toolkit';
-import { Text, View } from 'react-native';
+import { Text, View, ScrollView, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 
 import { fetchBreakfast, fetchLunch, fetchDinner, fetchSnack, selectAllUserMeals } from '../../store/userMealsSlice';
 import { selectUserMacros, fetchUserMacros } from '../../store/userMacrosSlice';
 import { fetchProducts } from '../../store/productsSlice';
+import { selectUser } from '../../store/userSlice';
 import DietResult from './DietResult';
 
 const UserDiet: React.FC = () => {
@@ -17,14 +18,17 @@ const UserDiet: React.FC = () => {
 
     const macros = useSelector(selectUserMacros);
     const meals = useSelector(selectAllUserMeals);
+    const user = useSelector(selectUser);
     React.useEffect(() => {
-        dispatch(fetchUserMacros(null));
-        dispatch(fetchProducts());
+        if(user.id !== "0") {
+            dispatch(fetchUserMacros(null));
+            dispatch(fetchProducts());
+        }       
     }, [dispatch]);
     React.useEffect(() => {
         //console.log("macros: ");
         //console.log(macros);
-        if (macros.calories > 0 && startDietProcess) {
+        if (user.id !== "0" && macros.calories > 0 && startDietProcess) {
             dispatch(fetchBreakfast(macros));
             dispatch(fetchLunch(macros));
             dispatch(fetchDinner(macros));
@@ -39,7 +43,7 @@ const UserDiet: React.FC = () => {
             setGenerateDiet(true);
     }, [meals]);
     return(<>
-    <View>
+    <ScrollView contentContainerStyle={styles.container}>
     <Text>User diet component</Text>
         {(chosenOption === "none" && <>
             <Button onPress={() => {setChosenOption("data")}}>Generate diet based on your data (recommended for beginners)</Button>
@@ -55,10 +59,16 @@ const UserDiet: React.FC = () => {
         </>)}
         {(generateDiet && <DietResult generateDiet={generateDiet} setGenerateDiet={setGenerateDiet}/>)}
 
-    </View>
+    </ScrollView>
         
     </>)
 };
+
+const styles = StyleSheet.create({
+    container: {
+      alignItems: 'stretch',
+    },
+  });
 
 export default UserDiet;
 

@@ -19,8 +19,7 @@ export default function DietScreen() {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: 'stretch',
     },
     title: {
       fontSize: 20,

@@ -42,7 +42,7 @@ const userMacrosSlice = createSlice({
     extraReducers: builder => {
         builder.addCase(fetchUserMacros.fulfilled, (state, action: PayloadAction<Macros>) => {
             if(action.payload) {
-                console.log(action.payload);
+                //console.log(action.payload);
                 state.calories = action.payload.calories;
                 state.carbohydrates = action.payload.carbohydrates;
                 state.fat = action.payload.fat;

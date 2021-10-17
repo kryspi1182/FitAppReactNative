@@ -56,8 +56,11 @@ const userMealsSlice = createSlice({
     reducers: {},
     extraReducers: builder => {
         builder.addCase(fetchBreakfast.fulfilled, (state, action: PayloadAction<Array<Meal>>) => {
-            if (action.payload)
+            if (action.payload) {
+                //console.log(action.payload);
                 userMealsAdapter.upsertMany(state, action);
+            }
+                
         })
         .addCase(fetchLunch.fulfilled, (state, action: PayloadAction<Array<Meal>>) => {
             if (action.payload)
