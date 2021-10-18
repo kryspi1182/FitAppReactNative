@@ -10,7 +10,6 @@ import UserDiet from '../components/diet/UserDiet';
 export default function DietScreen() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Diet</Text>
         <UserDiet />
       </View>
     );

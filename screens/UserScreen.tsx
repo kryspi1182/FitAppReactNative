@@ -10,7 +10,6 @@ import { Text, View } from '../components/Themed';
 export default function UserScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>User</Text>
       <UserProfile />
     </View>
   );
@@ -19,8 +18,8 @@ export default function UserScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'stretch',
+    //justifyContent: 'center',
   },
   title: {
     fontSize: 20,

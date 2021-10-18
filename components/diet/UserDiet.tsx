@@ -15,10 +15,39 @@ const UserDiet: React.FC = () => {
     const [chosenOption, setChosenOption] = React.useState("none");
     const [startDietProcess, setStartDietProcess] = React.useState(false);
     const [generateDiet, setGenerateDiet] = React.useState(false);
+    const [step, setStep] = React.useState(1);
+    const [title, setTitle] = React.useState("Generate diet based on your:");
 
     const macros = useSelector(selectUserMacros);
     const meals = useSelector(selectAllUserMeals);
     const user = useSelector(selectUser);
+
+    React.useEffect(() => {
+        switch(step) {
+            case 1:
+                setTitle("Generate diet based on your:");
+                break;
+            case 2:
+                setTitle("Almost there:");
+                break;
+            case 3:
+                setTitle("Weekly diet:");
+                break;
+        }
+    }, [step]);
+    React.useEffect(() => {
+        switch(chosenOption) {
+            case "data":
+                setStep(2);
+                break;
+            case "form":
+                setStep(2);
+                break;
+            case "none":
+                setStep(1);
+                break;
+        }
+    }, [chosenOption]);
     React.useEffect(() => {
         if(user.id !== "0") {
             dispatch(fetchUserMacros(null));
@@ -26,13 +55,12 @@ const UserDiet: React.FC = () => {
         }       
     }, [dispatch]);
     React.useEffect(() => {
-        //console.log("macros: ");
-        //console.log(macros);
         if (user.id !== "0" && macros.calories > 0 && startDietProcess) {
             dispatch(fetchBreakfast(macros));
             dispatch(fetchLunch(macros));
             dispatch(fetchDinner(macros));
             dispatch(fetchSnack(macros));
+            setStep(3);
             //setTimeout(() => setGenerateDiet(true), 500);
         }
     }, [startDietProcess]);
@@ -44,17 +72,42 @@ const UserDiet: React.FC = () => {
     }, [meals]);
     return(<>
     <ScrollView contentContainerStyle={styles.container}>
-    <Text>User diet component</Text>
+        <Text>{title}</Text>
         {(chosenOption === "none" && <>
-            <Button onPress={() => {setChosenOption("data")}}>Generate diet based on your data (recommended for beginners)</Button>
-            <Button onPress={() => {setChosenOption("form")}}>Generate diet based on macros of your choice</Button>
+            <Button 
+                mode="contained"
+                compact={true}
+                style={styles.button}
+                onPress={() => {setChosenOption("data")}}
+            >Your data</Button>
+            <Button 
+                mode="contained"
+                compact={true}
+                style={styles.button}
+                onPress={() => {setChosenOption("form")}}
+            >Macros of your choice</Button>
         </>)}
         {(chosenOption === "data" && <>
-            <Button onPress={() => {setChosenOption("none")}}>Back</Button>
-            <Button onPress={() => {setStartDietProcess(true)}}>Generate diet</Button>
+            <Button 
+                mode="contained"
+                compact={true}
+                style={styles.button}
+                onPress={() => {setChosenOption("none")}}
+            >Back</Button>
+            <Button 
+                mode="contained"
+                compact={true}
+                style={styles.button}
+                onPress={() => {setStartDietProcess(true)}}
+            >Generate diet</Button>
         </>)}
         {(chosenOption === "form" && <>
-            <Button onPress={() => {setChosenOption("none")}}>Back</Button>
+            <Button 
+                mode="contained"
+                compact={true}
+                style={styles.button}
+                onPress={() => {setChosenOption("none")}}
+            >Back</Button>
             <h3>Form will be here</h3>
         </>)}
         {(generateDiet && <DietResult generateDiet={generateDiet} setGenerateDiet={setGenerateDiet}/>)}
@@ -68,6 +121,12 @@ const styles = StyleSheet.create({
     container: {
       alignItems: 'stretch',
     },
+    button: {
+        width: '75%',
+        alignSelf: 'center',
+        margin: 10,
+        backgroundColor: '#4c8bf5'
+    }
   });
 
 export default UserDiet;

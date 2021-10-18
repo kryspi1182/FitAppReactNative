@@ -17,12 +17,14 @@ const MealWithProductsItem: React.FC<Props> = (props) => {
         <List.Item title="Name" description={props.meal.meal.name}/>
         <List.Item title="Description" description={props.meal.meal.description}/>
         <List.Item title="Recipe" description={props.meal.meal.recipe}/>
-        <Text>Products</Text>
+        
         <View style={styles.container}>
-            
-            {props.meal.products.map(product => {
-                return <Chip key={product.id + " " + props.meal.meal.id} style={styles.chip}>{product.name}</Chip>
-            })}
+            <Text style={styles.text}>Products:</Text>
+            <View style={styles.productsContainer}>
+                {props.meal.products.map(product => {
+                    return <Chip key={product.id + " " + props.meal.meal.id} style={styles.chip}>{product.name}</Chip>
+                })}
+            </View>
         </View>
     </List.Accordion>);
 };
@@ -41,6 +43,14 @@ const styles = StyleSheet.create({
     accordion: {
         paddingLeft: 20,
         backgroundColor: '#e3e6e4'
+    },
+    text: {
+        flex: 1,
+        paddingLeft: 15,
+        
+    },
+    productsContainer: {
+        flexWrap: "nowrap",
     }
   });
 

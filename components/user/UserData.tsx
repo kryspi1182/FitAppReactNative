@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Text, View } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { Button, Divider } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
 
 import { useFormik } from 'formik';
@@ -100,24 +100,26 @@ const UserData: React.FC = () => {
         }
     });
     return (
-        <View>
-            {/*<form onSubmit={formik.handleSubmit} id="user-data-form">*/}
+        <ScrollView contentContainerStyle={styles.container}>
                 <Text>Age:</Text>
                 <NumberInput 
                     value={age}
                     setValue={setAge}
                 />
+                <Divider />
                 <Text>Height (cm):</Text>
                 <NumberInput 
                     value={height}
                     setValue={setHeight}
                 />
+                <Divider />
                 <Text>Weight (kg):</Text>
                 <NumberInput 
                     value={weight}
                     setValue={setWeight}
                 />
-                <Text>Gender</Text>
+                <Divider />
+                <Text>Gender:</Text>
                 <Picker
                     selectedValue={gender}
                     onValueChange={setGender}
@@ -125,7 +127,8 @@ const UserData: React.FC = () => {
                     <Picker.Item label="Male" value={1}/>
                     <Picker.Item label="Female" value={2}/>
                 </Picker>
-                <Text>{genderText}</Text>
+                <Divider />
+                <Text>Activity:</Text>
                 <Picker
                     selectedValue={activity}
                     onValueChange={setActivity}
@@ -135,11 +138,26 @@ const UserData: React.FC = () => {
                     <Picker.Item label="Moderate" value={1.55}/>
                     <Picker.Item label="High" value={1.75}/>
                 </Picker>
-                <Text>{activityText}</Text>
-                <Button onPress={formik.handleSubmit}>Submit</Button>
-            {/*</form>*/}
-        </View>
+                <Button 
+                    mode="contained"
+                    compact={true}
+                    style={styles.button}
+                    onPress={formik.handleSubmit}
+                >Submit</Button>
+        </ScrollView>
     )
 }
 
-export default UserData
+const styles = StyleSheet.create({
+    container: {
+        padding: 10
+    },
+    button: {
+        maxWidth: '75%',
+        alignSelf: 'center',
+        margin: 10,
+        backgroundColor: '#4c8bf5'
+    }
+});
+
+export default UserData;
