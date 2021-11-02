@@ -42,7 +42,6 @@ const userSlice = createSlice({
     extraReducers: builder => {
         builder.addCase(fetchUser.fulfilled, (state, action: PayloadAction<User>) => {
             if (action.payload) {
-                //console.log(action.payload);
                 state.id = action.payload.id;
                 state.email = action.payload.email;
                 state.userName = action.payload.userName;
@@ -51,15 +50,18 @@ const userSlice = createSlice({
                 state.gender = action.payload.gender;
                 state.height = action.payload.height;
                 state.weight = action.payload.weight;
+                state.medicalConditions = action.payload.medicalConditions;
+                state.unwantedProducts = action.payload.unwantedProducts;
             }
         }).addCase(updateUser.fulfilled, (state, action: PayloadAction<UserParams>) => {
             if (action.payload) {
-                //console.log(action.payload);
                 state.activity = action.payload.activity;
                 state.age = action.payload.age;
                 state.gender = action.payload.gender;
                 state.height = action.payload.height;
                 state.weight = action.payload.weight;
+                state.medicalConditions = action.payload.medicalConditions;
+                state.unwantedProducts = action.payload.unwantedProducts;
             }
         });
     }

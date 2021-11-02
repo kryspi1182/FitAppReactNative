@@ -30,7 +30,6 @@ const productsSlice = createSlice({
     extraReducers: builder => {
         builder.addCase(fetchProducts.fulfilled, (state, action: PayloadAction<Array<Product>>) => {
             if(action.payload) {
-                //console.log(action.payload);
                 productsAdapter.upsertMany(state, action);
             }
                 
