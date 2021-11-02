@@ -11,3 +11,6 @@ web-build/
 
 # macOS
 .DS_Store
+/.vs/slnx.sqlite
+/.vs/ProjectSettings.json
+/.vs/FitAppReactNative/v16/.suo
