@@ -14,9 +14,21 @@ type Props = {
 
 const AutocompleteInput: React.FC<Props> = (props) => {
     const [selectedValues, setSelectedValues] = React.useState(props.selectedValues);
+    const [mappedSelectedValues, setMappedSelectedValues] = React.useState(props.selectedValues.map(item => {
+        return {
+            id: item.id.toString(),
+            name: item.name
+        } as AutocompleteItem;
+    }));
+    const [mappedItems, setMappedItems] = React.useState(props.items.map(item => {
+        return {
+            id: item.id.toString(),
+            name: item.name
+        } as AutocompleteItem;
+    }));
 
     const handleChange = (selectedItems: AutocompleteItem[]) => {
-        setSelectedValues(selectedItems);
+        setMappedSelectedValues(selectedItems);
     };
 
     React.useEffect(() => {
@@ -27,10 +39,10 @@ const AutocompleteInput: React.FC<Props> = (props) => {
         <View style={{ flex: 1 }}>
         <MultiSelect
           hideTags
-          items={props.items}
+          items={mappedItems}
           uniqueKey="id"
           onSelectedItemsChange={handleChange}
-          selectedItems={selectedValues}
+          selectedItems={mappedSelectedValues}
         />
         </View>
     );

@@ -15,6 +15,7 @@ import { MealCategoryEnum } from '../../models/enums/MealCategoryEnum';
 import { DietTypeEnum } from '../../models/enums/DietTypeEnum';
 import { fetchMedicalConditions } from '../../store/medicalConditionsSlice';
 import { fetchMeals } from '../../store/mealsSlice';
+import CustomDiet from './CustomDiet';
 
 const UserDiet: React.FC = () => {
     const dispatch = useDispatch();
@@ -146,7 +147,7 @@ const UserDiet: React.FC = () => {
                 style={styles.button}
                 onPress={() => {setChosenOption("none")}}
             >Back</Button>
-            <h3>Form will be here</h3>
+            <CustomDiet setStartProcess={setStartCustomDietProcess} />
         </>)}
         {(generateDiet && <DietResult generateDiet={generateDiet} setGenerateDiet={setGenerateDiet} dietType={DietTypeEnum.Data}/>)}
         {(generateCustomDiet && <DietResult generateDiet={generateCustomDiet} setGenerateDiet={setGenerateCustomDiet} dietType={DietTypeEnum.Custom}/>)}

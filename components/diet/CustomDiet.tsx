@@ -18,6 +18,9 @@ import { UserDietParams } from '../../models/UserDietParams';
 import { MealCategoryEnum } from '../../models/enums/MealCategoryEnum';
 import { fetchMatchingMeals } from '../../store/userMealsSlice';
 import { AutocompleteItem } from '../common/AutocompleteItem';
+import NumberInput from '../common/NumberInput';
+import { Button, Divider } from 'react-native-paper';
+import AutocompleteInput from '../common/AutocompleteInput';
 
 type Props = {
     setStartProcess: Function
@@ -52,6 +55,36 @@ const CustomDiet: React.FC<Props> = (props) => {
     React.useEffect(() => {
         formik.setFieldValue('unwantedProductIds', selectedUnwantedProducts);
     }, [selectedUnwantedProducts]);
+
+    const [calories, setCalories] = React.useState(0);
+    const [carbohydrates, setCarbohydrates] = React.useState(0);
+    const [protein, setProtein] = React.useState(0);
+    const [fat, setFat] = React.useState(0);
+    const [sugar, setSugar] = React.useState(0);
+    const [salt, setSalt] = React.useState(0);
+    const [fibre, setFibre] = React.useState(0);
+
+    React.useEffect(() => {
+        formik.setFieldValue('calories', calories);
+    }, [calories]);
+    React.useEffect(() => {
+        formik.setFieldValue('carbohydrates', carbohydrates);
+    }, [carbohydrates]);
+    React.useEffect(() => {
+        formik.setFieldValue('protein', protein);
+    }, [protein]);
+    React.useEffect(() => {
+        formik.setFieldValue('fat', fat);
+    }, [fat]);
+    React.useEffect(() => {
+        formik.setFieldValue('sugar', sugar);
+    }, [sugar]);
+    React.useEffect(() => {
+        formik.setFieldValue('salt', salt);
+    }, [salt]);
+    React.useEffect(() => {
+        formik.setFieldValue('fibre', fibre);
+    }, [fibre]);
 
     const formik = useFormik({
         initialValues: {
@@ -122,6 +155,92 @@ const CustomDiet: React.FC<Props> = (props) => {
     });
     return(<>
         <ScrollView contentContainerStyle={styles.container}>
+            <View style={styles.formControl}>
+                <Text>Calories:</Text>
+                <NumberInput 
+                    value={calories}
+                    setValue={setCalories}
+                />
+                <Divider />
+            </View>
+            <View style={styles.formControl}>
+                <Text>Carbohydrates:</Text>
+                <NumberInput 
+                    value={carbohydrates}
+                    setValue={setCarbohydrates}
+                />
+                <Divider />
+            </View>
+            <View style={styles.formControl}>
+                <Text>Protein:</Text>
+                <NumberInput 
+                    value={protein}
+                    setValue={setProtein}
+                />
+                <Divider />
+            </View>
+            <View style={styles.formControl}>
+                <Text>Fat:</Text>
+                <NumberInput 
+                    value={fat}
+                    setValue={setFat}
+                />
+                <Divider />
+            </View>
+            <View style={styles.formControl}>
+                <Text>Sugar:</Text>
+                <NumberInput 
+                    value={sugar}
+                    setValue={setSugar}
+                />
+                <Divider />
+            </View>
+            <View style={styles.formControl}>
+                <Text>Salt:</Text>
+                <NumberInput 
+                    value={salt}
+                    setValue={setSalt}
+                />
+                <Divider />
+            </View>
+            <View style={styles.formControl}>
+                <Text>Fibre:</Text>
+                <NumberInput 
+                    value={fibre}
+                    setValue={setFibre}
+                />
+                <Divider />
+            </View>
+            <View style={styles.formControl}>
+                <Text>Medical conditions:</Text>
+                <AutocompleteInput 
+                    items={mappedMedicalConditions}
+                    id="medical-conditions"
+                    title="Medical conditions"
+                    setSelected={mapItemsToMedicalConditions}
+                    selectedValues={selectedMappedMedicalConditions}
+                />
+                <Divider />
+            </View>
+            <View style={styles.formControl}>
+                <Text>Unwanted products:</Text>
+                <AutocompleteInput 
+                    items={mappedProducts}
+                    id="unwanted-products"
+                    title="Unwanted products"
+                    setSelected={mapItemsToUnwantedProducts}
+                    selectedValues={selectedMappedUnwantedProducts}
+                />
+                <Divider />
+            </View>
+            <View>
+                <Button 
+                        mode="contained"
+                        compact={true}
+                        style={styles.button}
+                        onPress={formik.handleSubmit}
+                    >Submit</Button>
+            </View>
             
         </ScrollView>
     </>);
@@ -136,6 +255,9 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         margin: 10,
         backgroundColor: '#4c8bf5'
+    },
+    formControl: {
+        width: '33%'
     }
   });
 

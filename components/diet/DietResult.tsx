@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { EntityId } from '@reduxjs/toolkit';
 import { Text, View, ScrollView, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
+import Dialog from "react-native-dialog";
 
 import { fetchBreakfast, fetchSnack, fetchDinner, fetchLunch, selectAllUserMeals } from '../../store/userMealsSlice';
 import WeekDietBox from './WeekDietBox';
@@ -36,6 +37,8 @@ const DietResult: React.FC<Props> = (props) => {
     const [dietSnack, setDietSnack] = React.useState(Array<EntityId>());
     const [dietDinner, setDietDinner] = React.useState(Array<EntityId>());
     const [dietSaved, setDietSaved] = React.useState(false);
+    const [showDialog, setShowDialog] = React.useState(false);
+    const [dietName, setDietName] = React.useState("Diet");
 
     const meals = useSelector(selectAllUserMeals);
     const customMeals = useSelector(selectAllCustomMeals);
@@ -64,10 +67,18 @@ const DietResult: React.FC<Props> = (props) => {
         setDietReady(true);
     };
 
+    const handleCancel = () => {
+        setShowDialog(false);
+    }
+
+    const handleSave = () => {
+        saveDiet();
+        setShowDialog(false);
+    }
+
     const saveDiet = () => {
         const dietMeals = [...dietBreakfast, ...dietSecondBreakfast, ...dietLunch, ...dietSnack, ...dietDinner];
-        var dietName = prompt("Name your diet:", "Diet");
-        if(dietName) {
+        if(saveDiet) {
             const savedDietParams = {
                 userId: user.id,
                 name: dietName,
@@ -96,6 +107,17 @@ const DietResult: React.FC<Props> = (props) => {
     }, [props.generateDiet]);
 
     return (<ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.container}>
+            <Dialog.Container visible={showDialog}>
+                <Dialog.Title>Save diet</Dialog.Title>
+                <Dialog.Description>
+                Enter diet name
+                </Dialog.Description>
+                <Dialog.Input onChangeText={(text) => setDietName(text)}/>
+                <Dialog.Button label="Cancel" onPress={handleCancel} />
+                <Dialog.Button label="Save" onPress={handleSave} />
+            </Dialog.Container>
+        </View>
         {((dietReady 
         && dietBreakfast.length === 7
         && dietSecondBreakfast.length === 7
@@ -108,7 +130,7 @@ const DietResult: React.FC<Props> = (props) => {
             lunches={dietLunch}
             snacks={dietSnack}
             dinners={dietDinner}/>)}
-        {(!dietSaved && <Button onPress={saveDiet}>
+        {(!dietSaved && <Button onPress={() => setShowDialog(true)}>
             Save diet
         </Button>)}
     </ScrollView>)
