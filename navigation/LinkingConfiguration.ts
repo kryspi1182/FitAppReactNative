@@ -39,6 +39,16 @@ const linking: LinkingOptions<RootStackParamList> = {
             screens: {
               UserSavedDietsScreen: 'userSavedDiets'
             }
+          },
+          Training: {
+            screens: {
+              TrainingScreen: 'training'
+            }
+          },
+          UserSavedTrainings: {
+            screens: {
+              UserSavedTrainingsScreen: 'userSavedTrainings'
+            }
           }
         },
       },

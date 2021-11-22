@@ -13,6 +13,7 @@ import { selectUser } from '../../store/userSlice';
 import { Meal } from '../../models/Meal';
 import { UserSavedDietParams } from '../../models/UserSavedDietParams';
 import { addUserSavedDiet } from '../../store/userSavedDietsSlice';
+import { MealCategoryEnum } from '../../models/enums/MealCategoryEnum';
 
 const getRandomInt = (max: number) => {
     return Math.floor(Math.random() * max);
@@ -28,9 +29,11 @@ const DietResult: React.FC<Props> = (props) => {
     const dispatch = useDispatch();
 
     const [dietReady, setDietReady] = React.useState(false);
-    const [breakfastDinners, setBreakfastDinners] = React.useState(Array<EntityId>());
+    const [breakfasts, setBreakfasts] = React.useState(Array<EntityId>());
     const [lunches, setLunches] = React.useState(Array<EntityId>());
     const [snacks, setSnacks] = React.useState(Array<EntityId>());
+    const [secondBreakfasts, setSecondBreakfasts] = React.useState(Array<EntityId>());
+    const [dinners, setDinners] = React.useState(Array<EntityId>());
     const [dietBreakfast, setDietBreakfast] = React.useState(Array<EntityId>());
     const [dietSecondBreakfast, setDietSecondBreakfast] = React.useState(Array<EntityId>());
     const [dietLunch, setDietLunch] = React.useState(Array<EntityId>());
@@ -54,15 +57,17 @@ const DietResult: React.FC<Props> = (props) => {
     };
 
     const pickDietMeals = () => {
-        const breakfastDinnerIds = breakfastDinners.length;
+        const breakfastIds = breakfasts.length;
         const lunchIds = lunches.length;
         const snackIds = snacks.length;
+        const secondBreakfastIds = secondBreakfasts.length;
+        const dinnerIds = dinners.length;
         for(var i = 0; i < 7; i++) {
-            setDietBreakfast(old => [...old, breakfastDinners[getRandomInt(breakfastDinnerIds)]]);
-            setDietSecondBreakfast(old => [...old, snacks[getRandomInt(snackIds)]]);
+            setDietBreakfast(old => [...old, breakfasts[getRandomInt(breakfastIds)]]);
+            setDietSecondBreakfast(old => [...old, secondBreakfasts[getRandomInt(secondBreakfastIds)]]);
             setDietLunch(old => [...old, lunches[getRandomInt(lunchIds)]]);
             setDietSnack(old => [...old, snacks[getRandomInt(snackIds)]]);
-            setDietDinner(old => [...old, breakfastDinners[getRandomInt(breakfastDinnerIds)]]);          
+            setDietDinner(old => [...old, dinners[getRandomInt(dinnerIds)]]);          
         }
         setDietReady(true);
     };
@@ -78,7 +83,7 @@ const DietResult: React.FC<Props> = (props) => {
 
     const saveDiet = () => {
         const dietMeals = [...dietBreakfast, ...dietSecondBreakfast, ...dietLunch, ...dietSnack, ...dietDinner];
-        if(saveDiet) {
+        if(dietName) {
             const savedDietParams = {
                 userId: user.id,
                 name: dietName,
@@ -90,18 +95,22 @@ const DietResult: React.FC<Props> = (props) => {
     };
 
     React.useEffect(() => {
-        if(breakfastDinners.length > 0
+        if(breakfasts.length > 0
             && lunches.length > 0
-            && snacks.length > 0) {
+            && snacks.length > 0
+            && secondBreakfasts.length > 0
+            && dinners.length > 0) {
                 pickDietMeals();
             }
-    }, [breakfastDinners, lunches, snacks]);
+    }, [breakfasts, lunches, snacks, secondBreakfasts, dinners]);
 
     React.useEffect(() => {
         if(props.generateDiet && resultMeals.length > 0) {
-            setBreakfastDinners(resultMeals.filter((meal) => meal.mealCategoryId === 1).map((meal) => meal.id));
-            setLunches(resultMeals.filter((meal) => meal.mealCategoryId === 2).map((meal) => meal.id));
-            setSnacks(resultMeals.filter((meal) => meal.mealCategoryId === 3).map((meal) => meal.id));
+            setBreakfasts(resultMeals.filter((meal) => meal.mealCategoryId === MealCategoryEnum.Breakfast).map((meal) => meal.id));
+            setLunches(resultMeals.filter((meal) => meal.mealCategoryId === MealCategoryEnum.Lunch).map((meal) => meal.id));
+            setSnacks(resultMeals.filter((meal) => meal.mealCategoryId === MealCategoryEnum.Snack).map((meal) => meal.id));
+            setSecondBreakfasts(resultMeals.filter((meal) => meal.mealCategoryId === MealCategoryEnum.SecondBreakfast).map((meal) => meal.id));
+            setDinners(resultMeals.filter((meal) => meal.mealCategoryId === MealCategoryEnum.Dinner).map((meal) => meal.id));
         }
             
     }, [props.generateDiet]);

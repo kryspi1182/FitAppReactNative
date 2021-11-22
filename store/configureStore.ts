@@ -9,6 +9,15 @@ import customMealsReducer from './customMealsSlice';
 import medicalConditionsReducer from './medicalConditionsSlice';
 import userSavedDietsReducer from './userSavedDietsSlice';
 import mealsReducer from './mealsSlice';
+import userTrainingsReducer from './userTrainingsSlice';
+import exercisesReducer from './exercisesSlice';
+import bodyTargetsReducer from './bodyTargetsSlice';
+import userSavedTrainingsReducer from './userSavedTrainingsSlice';
+import trainingsReducer from './trainingsSlice';
+import trainingCategoriesReducer from './trainingCategoriesSlice';
+import difficultiesReducer from './difficultiesSlice';
+import trainingConditionsReducer from './trainingConditionsSlice';
+import trainingConditionSeveritiesReducer from './trainingConditionSeveritiesSlice';
 
 const store = configureStore({
     // @ts-ignore
@@ -27,7 +36,16 @@ const store = configureStore({
         medicalConditions: medicalConditionsReducer,
         customMeals: customMealsReducer,
         userSavedDiets: userSavedDietsReducer,
-        meals: mealsReducer
+        meals: mealsReducer,
+        userTrainings: userTrainingsReducer,
+        exercises: exercisesReducer,
+        bodyTargets: bodyTargetsReducer,
+        userSavedTrainings: userSavedTrainingsReducer,
+        trainings: trainingsReducer,
+        trainingCategories: trainingCategoriesReducer,
+        difficulties: difficultiesReducer,
+        trainingConditions: trainingConditionsReducer,
+        trainingConditionSeverities: trainingConditionSeveritiesReducer
     },
 
 });

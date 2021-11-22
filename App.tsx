@@ -10,7 +10,7 @@ import Navigation from './navigation';
 import store from './store/configureStore';
 import { LogBox, RefreshControlBase } from 'react-native';
 
-LogBox.ignoreAllLogs(true);
+//LogBox.ignoreAllLogs(true);
 
 export default function App() {
   const isLoadingComplete = useCachedResources();

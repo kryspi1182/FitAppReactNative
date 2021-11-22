@@ -15,6 +15,14 @@ import { fetchUserSavedDiets } from '../../store/userSavedDietsSlice';
 import { fetchProducts } from '../../store/productsSlice';
 import { fetchMedicalConditions } from '../../store/medicalConditionsSlice';
 import { fetchMeals } from '../../store/mealsSlice';
+import { fetchExercises } from '../../store/exercisesSlice';
+import { fetchBodyTargets } from '../../store/bodyTargetsSlice';
+import { fetchTrainings } from '../../store/trainingsSlice';
+import { fetchTrainingCategories } from '../../store/trainingCategoriesSlice';
+import { fetchDifficulties } from '../../store/difficultiesSlice';
+import { fetchTrainingConditions } from '../../store/trainingConditionsSlice';
+import { fetchTrainingConditionSeverities } from '../../store/trainingConditionSeveritiesSlice';
+import { fetchUserSavedTrainings } from '../../store/userSavedTrainingsSlice';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -75,9 +83,17 @@ const Authorize: React.FC = () => {
     if(userInfo.sub) {
       dispatch(fetchUser(userInfo.sub as string));
       dispatch(fetchUserSavedDiets(userInfo.sub));
+      dispatch(fetchUserSavedTrainings(userInfo.sub));
       dispatch(fetchProducts());
       dispatch(fetchMedicalConditions());
       dispatch(fetchMeals());
+      dispatch(fetchExercises());
+      dispatch(fetchBodyTargets());
+      dispatch(fetchTrainings());
+      dispatch(fetchTrainingCategories());
+      dispatch(fetchDifficulties());
+      dispatch(fetchTrainingConditions());
+      dispatch(fetchTrainingConditionSeverities());
     }
   }, [userInfo]);
 

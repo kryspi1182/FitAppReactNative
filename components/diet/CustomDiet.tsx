@@ -143,12 +143,16 @@ const CustomDiet: React.FC<Props> = (props) => {
                 macros: macros,
                 unwantedProductIds: selectedUnwantedProducts,
                 conditionIds: selectedMedicalConditions,
-                mealCategory: MealCategoryEnum.BreakfastDinner
+                mealCategory: MealCategoryEnum.Breakfast
             } as UserDietParams;
             dispatch(fetchMatchingCustomMeals(dietParams));
             dietParams.mealCategory = MealCategoryEnum.Lunch;
             dispatch(fetchMatchingCustomMeals(dietParams));
             dietParams.mealCategory = MealCategoryEnum.Snack;
+            dispatch(fetchMatchingCustomMeals(dietParams));
+            dietParams.mealCategory = MealCategoryEnum.SecondBreakfast;
+            dispatch(fetchMatchingCustomMeals(dietParams));
+            dietParams.mealCategory = MealCategoryEnum.Dinner;
             dispatch(fetchMatchingCustomMeals(dietParams));
             props.setStartProcess(true);
         }

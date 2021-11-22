@@ -19,6 +19,8 @@ import DietScreen from '../screens/DietScreen';
 import UserSavedDietsScreen from '../screens/UserSavedDietsScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import TrainingScreen from '../screens/TrainingScreen';
+import UserSavedTrainingsScreen from '../screens/UserSavedTrainingsScreen';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -90,6 +92,24 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <FontAwesomeIcon name="calendar-o" color={color} />,
         }}
       />
+
+      <BottomTab.Screen
+        name="Training"
+        component={TrainingScreen}
+        options={{
+          title: 'Training',
+          tabBarIcon: ({ color }) => <MaterialCommunityIcon name="dumbbell" color={color} />,
+        }}
+      />
+
+      <BottomTab.Screen
+        name="UserSavedTrainings"
+        component={UserSavedTrainingsScreen}
+        options={{
+          title: 'Saved trainings',
+          tabBarIcon: ({ color }) => <MaterialCommunityIcon name="format-line-weight" color={color} />,
+        }}
+      />  
     </BottomTab.Navigator>
   );
 }

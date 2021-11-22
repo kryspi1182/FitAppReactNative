@@ -1,0 +1,45 @@
+import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { EntityId } from '@reduxjs/toolkit';
+
+import { getAllEnumEntries, getAllEnumKeys, getAllEnumValues } from 'enum-for';
+import { Text, View, ScrollView, StyleSheet } from 'react-native';
+import { Button } from 'react-native-paper';
+import Dialog from "react-native-dialog";
+
+import { selectAllUserTrainings } from '../../store/userTrainingsSlice';
+import { TrainingCategoryEnum } from '../../models/enums/TrainingCategoryEnum';
+import TrainingBox from './TrainingBox';
+import { Training } from '../../models/Training';
+
+type Props = {
+    trainings: Training[]
+};
+
+const TrainingList: React.FC<Props> = (props) => {
+    const dispatch = useDispatch();
+    const trainingCategoryIds = getAllEnumValues(TrainingCategoryEnum);
+    const trainingCategories = getAllEnumKeys(TrainingCategoryEnum);
+    return(<ScrollView contentContainerStyle={styles.container}>
+        {trainingCategoryIds.map(catId => {
+            if (props.trainings.some(training => training.trainingCategoryId === catId)) {
+                return (<View style={styles.container}>
+                    {props.trainings.filter(training => training.trainingCategoryId === catId)
+                        .map(training => {
+                            //console.log(training);
+                            return (<TrainingBox training={training} />);
+                    })}
+                </View>);  
+            }
+        })}
+    </ScrollView>)
+}
+
+const styles = StyleSheet.create({
+    container: {
+      alignItems: 'stretch',
+      justifyContent: 'center',
+    },
+  });
+
+export default TrainingList;
