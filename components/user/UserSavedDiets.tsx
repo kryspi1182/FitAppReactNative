@@ -20,19 +20,19 @@ const UserSavedDiets: React.FC = () => {
             for(var i = 0; i < userDiet.meals.length; i++) {
                 switch(i%5) {
                     case 0:
-                        breakfasts.push(userDiet.meals[i].id);
+                        breakfasts.push(userDiet.meals[i].mealId);
                     break;
                     case 1:
-                        secondBreakfasts.push(userDiet.meals[i].id);
+                        secondBreakfasts.push(userDiet.meals[i].mealId);
                     break;
                     case 2:
-                        lunches.push(userDiet.meals[i].id);
+                        lunches.push(userDiet.meals[i].mealId);
                     break;
                     case 3:
-                        snacks.push(userDiet.meals[i].id);
+                        snacks.push(userDiet.meals[i].mealId);
                     break;
                     case 4:
-                        dinners.push(userDiet.meals[i].id);
+                        dinners.push(userDiet.meals[i].mealId);
                     break;
                 };
             }
@@ -46,28 +46,6 @@ const UserSavedDiets: React.FC = () => {
                     key={userDiet.name}
                 />
             </List.Accordion>)
-            /*return (
-            <Accordion>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                >
-                    <Typography>{userDiet.name}</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <WeekDietBox
-                            breakfasts={breakfasts}
-                            secondBreakfasts={secondBreakfasts}
-                            lunches={lunches}
-                            snacks={snacks}
-                            dinners={dinners}
-                        />
-                    </AccordionDetails>
-            </Accordion>
-            
-            
-            )*/
         })}
     </ScrollView>);
 };

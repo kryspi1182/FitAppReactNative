@@ -9,6 +9,7 @@ import { DietMeals } from '../../models/DietMeals';
 import { Product } from '../../models/Product';
 import { MealWithProducts } from '../../models/MealWithProducts';
 import { selectAllUserMeals } from '../../store/userMealsSlice';
+import { selectAllMeals } from '../../store/mealsSlice';
 import { selectAllProducts } from '../../store/productsSlice';
 
 type Props = {
@@ -20,7 +21,7 @@ type Props = {
 };
 
 const WeekDietBox: React.FC<Props> = (props) => {
-    const meals = useSelector(selectAllUserMeals);
+    const meals = useSelector(selectAllMeals);
     const allProducts = useSelector(selectAllProducts);
     const mapMealToMealWithProducts = (m: Meal) => {
         const prod = allProducts.filter((product) => m.mealProducts.some((mealProduct) => mealProduct.productId === product.id));
