@@ -34,6 +34,11 @@ const linking: LinkingOptions<RootStackParamList> = {
             screens: {
               DietScreen: 'diet'
             }
+          },
+          UserSavedDiets: {
+            screens: {
+              UserSavedDietsScreen: 'userSavedDiets'
+            }
           }
         },
       },

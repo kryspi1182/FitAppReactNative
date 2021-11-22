@@ -11,6 +11,10 @@ import { authorizeSrv } from './AuthorizeSrv';
 import { userApi } from '../api_communication/UserApi';
 import { UserIdentityInfo } from '../../models/UserIdentityInfo';
 import { fetchUser, selectUser } from '../../store/userSlice';
+import { fetchUserSavedDiets } from '../../store/userSavedDietsSlice';
+import { fetchProducts } from '../../store/productsSlice';
+import { fetchMedicalConditions } from '../../store/medicalConditionsSlice';
+import { fetchMeals } from '../../store/mealsSlice';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -70,6 +74,10 @@ const Authorize: React.FC = () => {
   React.useEffect(() => {
     if(userInfo.sub) {
       dispatch(fetchUser(userInfo.sub as string));
+      dispatch(fetchUserSavedDiets(userInfo.sub));
+      dispatch(fetchProducts());
+      dispatch(fetchMedicalConditions());
+      dispatch(fetchMeals());
     }
   }, [userInfo]);
 

@@ -29,6 +29,7 @@ export type RootTabParamList = {
   TabTwo: undefined;
   User: undefined;
   Diet: undefined;
+  UserSavedDiets: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<

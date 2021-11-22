@@ -6,6 +6,7 @@ import { PayloadAction } from '@reduxjs/toolkit/src';
 import { dietApi } from '../components/api_communication/DietApi';
 import { UserParams } from '../models/UserParams';
 import { Macros } from '../models/Macros';
+import { UserDietParams } from '../models/UserDietParams';
 
 const userMealsAdapter = createEntityAdapter<Meal>();
 
@@ -45,6 +46,16 @@ export const fetchSnack = createAsyncThunk('meal/snack', async (macros: Macros) 
     }
 });
 
+export const fetchMatchingMeals = createAsyncThunk('meal/match', async (params: UserDietParams) => {
+    try {
+        console.log(params);
+        return await dietApi.getMatchingMeals(params);
+    }
+    catch (e) {
+        return e.json();
+    }
+});
+
 export const {
     selectAll: selectAllUserMeals,
     selectById: selectUserMealById,
@@ -73,6 +84,13 @@ const userMealsSlice = createSlice({
         .addCase(fetchSnack.fulfilled, (state, action: PayloadAction<Array<Meal>>) => {
             if (action.payload)
                 userMealsAdapter.upsertMany(state, action);
+        })
+        .addCase(fetchMatchingMeals.fulfilled, (state, action: PayloadAction<Array<Meal>>) => {
+            if (action.payload) {
+                //console.log(action.payload);
+                userMealsAdapter.upsertMany(state, action);
+            }
+                
         })
     }
 });

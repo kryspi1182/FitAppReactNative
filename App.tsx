@@ -8,6 +8,9 @@ import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 import store from './store/configureStore';
+import { LogBox, RefreshControlBase } from 'react-native';
+
+LogBox.ignoreAllLogs(true);
 
 export default function App() {
   const isLoadingComplete = useCachedResources();

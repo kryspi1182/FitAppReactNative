@@ -5,6 +5,10 @@ import userReducer from './userSlice';
 import productsReducer from './productsSlice';
 import userMacrosReducer from './userMacrosSlice';
 import userMealsReducer from './userMealsSlice';
+import customMealsReducer from './customMealsSlice';
+import medicalConditionsReducer from './medicalConditionsSlice';
+import userSavedDietsReducer from './userSavedDietsSlice';
+import mealsReducer from './mealsSlice';
 
 const store = configureStore({
     // @ts-ignore
@@ -19,7 +23,11 @@ const store = configureStore({
         user: userReducer,
         products: productsReducer,
         userMacros: userMacrosReducer,
-        userMeals: userMealsReducer
+        userMeals: userMealsReducer,
+        medicalConditions: medicalConditionsReducer,
+        customMeals: customMealsReducer,
+        userSavedDiets: userSavedDietsReducer,
+        meals: mealsReducer
     },
 
 });

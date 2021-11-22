@@ -16,6 +16,7 @@ import UserScreen from '../screens/UserScreen';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import DietScreen from '../screens/DietScreen';
+import UserSavedDietsScreen from '../screens/UserSavedDietsScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -58,7 +59,7 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="User"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
@@ -78,6 +79,15 @@ function BottomTabNavigator() {
         options={{
           title: 'User',
           tabBarIcon: ({ color }) => <FontAwesomeIcon name="user" color={color} />,
+        }}
+      />
+
+      <BottomTab.Screen
+        name="UserSavedDiets"
+        component={UserSavedDietsScreen}
+        options={{
+          title: 'Saved Diets',
+          tabBarIcon: ({ color }) => <FontAwesomeIcon name="calendar-o" color={color} />,
         }}
       />
     </BottomTab.Navigator>
