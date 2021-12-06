@@ -18,6 +18,8 @@ const UserTraining: React.FC = () => {
     const [title, setTitle] = React.useState("Find trainings based on:");
     const [startTrainingProcess, setStartTrainingProcess] = React.useState(false);
     const [showTraining, setShowTraining] = React.useState(false);
+    const [showError, setShowError] = React.useState(false);
+    const [notFirstRender, setNotFirstRender] = React.useState(false);
 
     const userTrainings = useSelector(selectAllUserTrainings);
     const trainingConditions = useSelector(selectAllTrainingConditions);
@@ -46,11 +48,16 @@ const UserTraining: React.FC = () => {
                 break;
             case "none":
                 setStep(1);
+                setStartTrainingProcess(false);
+                setShowTraining(false);
+                setShowError(false);
+                //setNotFirstRender(false);
                 break;
         }
     }, [chosenOption]);
     React.useEffect(() => {
         if(startTrainingProcess) {
+            //setNotFirstRender(true);
             let params = {
                 difficulty: user.difficultyId,
                 trainingConditions: trainingConditions.filter(x => user.trainingConditions.some(y => y.trainingConditionId === x.id)),
@@ -62,6 +69,11 @@ const UserTraining: React.FC = () => {
     React.useEffect(() => {
         if(userTrainings.length > 0) {
             setShowTraining(true);
+            setShowError(false);
+        }
+        else {
+            setShowTraining(false);
+            setShowError(true);
         }
     }, [userTrainings]);
     
@@ -106,7 +118,7 @@ const UserTraining: React.FC = () => {
             <CustomTraining />
         </>)}
 
-            {(showTraining && <TrainingResult />)}
+            {(showTraining && <TrainingResult trainingConditions={trainingConditions.filter(x => user.trainingConditions.some(y => y.trainingConditionId === x.id))}/>)}
     </ScrollView>
     </>)
 };

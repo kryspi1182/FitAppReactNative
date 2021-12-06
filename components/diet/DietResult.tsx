@@ -14,6 +14,8 @@ import { Meal } from '../../models/Meal';
 import { UserSavedDietParams } from '../../models/UserSavedDietParams';
 import { addUserSavedDiet } from '../../store/userSavedDietsSlice';
 import { MealCategoryEnum } from '../../models/enums/MealCategoryEnum';
+import ModalWithContent from '../common/ModalWithContent';
+import SaveDietModal from './SaveDietModal';
 
 const getRandomInt = (max: number) => {
     return Math.floor(Math.random() * max);
@@ -41,7 +43,7 @@ const DietResult: React.FC<Props> = (props) => {
     const [dietDinner, setDietDinner] = React.useState(Array<EntityId>());
     const [dietSaved, setDietSaved] = React.useState(false);
     const [showDialog, setShowDialog] = React.useState(false);
-    const [dietName, setDietName] = React.useState("Diet");
+    const [dietName, setDietName] = React.useState("");
 
     const meals = useSelector(selectAllUserMeals);
     const customMeals = useSelector(selectAllCustomMeals);
@@ -115,8 +117,14 @@ const DietResult: React.FC<Props> = (props) => {
             
     }, [props.generateDiet]);
 
+    React.useEffect(() => {
+        if (dietName !== "") {
+            saveDiet();
+        }
+    }, [dietName]);
+
     return (<ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.container}>
+        {/* <View style={styles.container}>
             <Dialog.Container visible={showDialog}>
                 <Dialog.Title>Save diet</Dialog.Title>
                 <Dialog.Description>
@@ -126,7 +134,7 @@ const DietResult: React.FC<Props> = (props) => {
                 <Dialog.Button label="Cancel" onPress={handleCancel} />
                 <Dialog.Button label="Save" onPress={handleSave} />
             </Dialog.Container>
-        </View>
+        </View> */}
         {((dietReady 
         && dietBreakfast.length === 7
         && dietSecondBreakfast.length === 7
@@ -139,9 +147,10 @@ const DietResult: React.FC<Props> = (props) => {
             lunches={dietLunch}
             snacks={dietSnack}
             dinners={dietDinner}/>)}
-        {(!dietSaved && <Button onPress={() => setShowDialog(true)}>
+        {/* {(!dietSaved && <Button onPress={() => setShowDialog(true)}>
             Save diet
-        </Button>)}
+        </Button>)} */}
+        {(!dietSaved && <ModalWithContent title="Save diet" content={<SaveDietModal setInput={setDietName} />} />)}
     </ScrollView>)
 };
 

@@ -12,7 +12,8 @@ export interface User {
     gender: number,
     height: number,
     weight: number,
-    difficultyId: number
+    difficultyId: number,
+    weightTargetId: number,
     medicalConditions: UserMedicalCondition[],
     unwantedProducts: UserUnwantedProduct[],
     trainingConditions: UserTrainingCondition[]

@@ -18,6 +18,7 @@ const initialState: User = {
     age: 20,
     gender: 1,
     difficultyId: 1,
+    weightTargetId: 1,
     unwantedProducts: [] as UserUnwantedProduct[],
     medicalConditions: [] as UserMedicalCondition[],
     trainingConditions: [] as UserTrainingCondition[]
@@ -58,6 +59,7 @@ const userSlice = createSlice({
                 state.height = action.payload.height;
                 state.weight = action.payload.weight;
                 state.difficultyId = action.payload.difficultyId;
+                state.weightTargetId = action.payload.weightTargetId;
                 state.medicalConditions = action.payload.medicalConditions;
                 state.unwantedProducts = action.payload.unwantedProducts;
                 state.trainingConditions = action.payload.trainingConditions;
@@ -70,6 +72,7 @@ const userSlice = createSlice({
                 state.height = action.payload.height;
                 state.weight = action.payload.weight;
                 state.difficultyId = action.payload.difficulty;
+                state.weightTargetId = action.payload.weightTargetId;
                 state.medicalConditions = action.payload.medicalConditions;
                 state.unwantedProducts = action.payload.unwantedProducts;
                 state.trainingConditions = action.payload.trainingConditions;

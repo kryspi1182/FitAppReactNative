@@ -55,6 +55,10 @@ const UserDiet: React.FC = () => {
                 break;
             case "none":
                 setStep(1);
+                setStartDietProcess(false);
+                setStartCustomDietProcess(false);
+                setGenerateDiet(false);
+                setGenerateCustomDiet(false);
                 break;
         }
     }, [chosenOption]);
@@ -72,31 +76,36 @@ const UserDiet: React.FC = () => {
                 macros: macros,
                 unwantedProductIds: user.unwantedProducts.map(x => x.productId),
                 conditionIds: user.medicalConditions.map(x => x.medicalConditionId),
-                mealCategory: MealCategoryEnum.Breakfast
+                mealCategory: MealCategoryEnum.Breakfast,
+                weightTarget: user.weightTargetId
             } as UserDietParams;
             const lunchParams = {
                 macros: macros,
                 unwantedProductIds: user.unwantedProducts.map(x => x.productId),
                 conditionIds: user.medicalConditions.map(x => x.medicalConditionId),
-                mealCategory: MealCategoryEnum.Lunch
+                mealCategory: MealCategoryEnum.Lunch,
+                weightTarget: user.weightTargetId
             } as UserDietParams;
             const snackParams = {
                 macros: macros,
                 unwantedProductIds: user.unwantedProducts.map(x => x.productId),
                 conditionIds: user.medicalConditions.map(x => x.medicalConditionId),
-                mealCategory: MealCategoryEnum.Snack
+                mealCategory: MealCategoryEnum.Snack,
+                weightTarget: user.weightTargetId
             } as UserDietParams;
             const secondBreakfastParams = {
                 macros: macros,
                 unwantedProductIds: user.unwantedProducts.map(x => x.productId),
                 conditionIds: user.medicalConditions.map(x => x.medicalConditionId),
-                mealCategory: MealCategoryEnum.SecondBreakfast
+                mealCategory: MealCategoryEnum.SecondBreakfast,
+                weightTarget: user.weightTargetId
             } as UserDietParams;
             const dinnerParams = {
                 macros: macros,
                 unwantedProductIds: user.unwantedProducts.map(x => x.productId),
                 conditionIds: user.medicalConditions.map(x => x.medicalConditionId),
-                mealCategory: MealCategoryEnum.Dinner
+                mealCategory: MealCategoryEnum.Dinner,
+                weightTarget: user.weightTargetId
             } as UserDietParams;
             dispatch(fetchMatchingMeals(breakfastParams));
             dispatch(fetchMatchingMeals(lunchParams));
@@ -107,17 +116,22 @@ const UserDiet: React.FC = () => {
         }
     }, [startDietProcess]);
     React.useEffect(() => {
-        if(meals.some((meal) => meal.mealCategoryId === 1) 
-        && meals.some((meal) => meal.mealCategoryId === 2)
-        && meals.some((meal) => meal.mealCategoryId === 3)) {
+        if(meals.some((meal) => meal.mealCategoryId === MealCategoryEnum.Breakfast) 
+        && meals.some((meal) => meal.mealCategoryId === MealCategoryEnum.SecondBreakfast)
+        && meals.some((meal) => meal.mealCategoryId === MealCategoryEnum.Lunch)
+        && meals.some((meal) => meal.mealCategoryId === MealCategoryEnum.Snack)
+        && meals.some((meal) => meal.mealCategoryId === MealCategoryEnum.Dinner)
+        && startDietProcess) {
             setGenerateDiet(true);
             setGenerateCustomDiet(false);
         }    
     }, [meals]);
     React.useEffect(() => {
-        if(customMeals.some((meal) => meal.mealCategoryId === 1) 
-        && customMeals.some((meal) => meal.mealCategoryId === 2)
-        && customMeals.some((meal) => meal.mealCategoryId === 3)
+        if(customMeals.some((meal) => meal.mealCategoryId === MealCategoryEnum.Breakfast) 
+        && customMeals.some((meal) => meal.mealCategoryId === MealCategoryEnum.SecondBreakfast)
+        && customMeals.some((meal) => meal.mealCategoryId === MealCategoryEnum.Lunch)
+        && customMeals.some((meal) => meal.mealCategoryId === MealCategoryEnum.Snack)
+        && customMeals.some((meal) => meal.mealCategoryId === MealCategoryEnum.Dinner)
         && startCustomDietProcess) {
             setGenerateCustomDiet(true);
             setGenerateDiet(false);

@@ -18,6 +18,7 @@ import trainingCategoriesReducer from './trainingCategoriesSlice';
 import difficultiesReducer from './difficultiesSlice';
 import trainingConditionsReducer from './trainingConditionsSlice';
 import trainingConditionSeveritiesReducer from './trainingConditionSeveritiesSlice';
+import weightTargetReducer from './weightTargetSlice';
 
 const store = configureStore({
     // @ts-ignore
@@ -45,7 +46,8 @@ const store = configureStore({
         trainingCategories: trainingCategoriesReducer,
         difficulties: difficultiesReducer,
         trainingConditions: trainingConditionsReducer,
-        trainingConditionSeverities: trainingConditionSeveritiesReducer
+        trainingConditionSeverities: trainingConditionSeveritiesReducer,
+        weightTargets: weightTargetReducer
     },
 
 });

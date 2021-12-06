@@ -3,14 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { List, Chip } from 'react-native-paper';
 import { Button, Text, View, StyleSheet } from 'react-native';
+import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { Exercise } from "../../models/Exercise";
 import { selectAllBodyTargets } from "../../store/bodyTargetsSlice";
+import { EntityId } from "@reduxjs/toolkit";
+import { TrainingConditionSeverityEnum } from "../../models/enums/TrainingConditionSeverityEnum";
 
 type Props = {
     exercise: Exercise,
     series: number,
-    repsPerSeries: number
+    repsPerSeries: number,
+    severity: EntityId | undefined
 };
 
 const ExerciseBox: React.FC<Props> = (props) => {
@@ -20,6 +24,11 @@ const ExerciseBox: React.FC<Props> = (props) => {
         title={props.exercise.name}
         style={styles.accordion}
     >
+        <View>
+            {props.severity == 0 && <FontAwesome name="check-circle" size={24} color="black" />}
+            {props.severity == TrainingConditionSeverityEnum.Unnoticeable && <MaterialCommunityIcons name="information-outline" size={24} color="black" />}
+            {props.severity == TrainingConditionSeverityEnum.Mild && <FontAwesome name="warning" size={24} color="black" />}
+        </View>
         <List.Item title="Series" description={props.series}/>
         <List.Item title="Reps" description={props.repsPerSeries} />
 

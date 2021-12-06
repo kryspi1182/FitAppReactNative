@@ -24,7 +24,8 @@ export const fetchUserMacros = createAsyncThunk('user/macros', async (parameter:
                 height: state.user.height,
                 activity: state.user.activity,
                 age: state.user.age,
-                gender: state.user.gender
+                gender: state.user.gender,
+                weightTargetId: state.user.weightTargetId
             } as UserParams;
             return await dietApi.getMacros(params);
         }

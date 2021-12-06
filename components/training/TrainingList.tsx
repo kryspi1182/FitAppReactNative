@@ -11,9 +11,13 @@ import { selectAllUserTrainings } from '../../store/userTrainingsSlice';
 import { TrainingCategoryEnum } from '../../models/enums/TrainingCategoryEnum';
 import TrainingBox from './TrainingBox';
 import { Training } from '../../models/Training';
+import { TrainingCondition } from '../../models/TrainingCondition';
 
 type Props = {
-    trainings: Training[]
+    trainings: Training[],
+    saveEnabled: boolean,
+    deleteEnabled: boolean,
+    trainingConditions: TrainingCondition[],
 };
 
 const TrainingList: React.FC<Props> = (props) => {
@@ -27,7 +31,11 @@ const TrainingList: React.FC<Props> = (props) => {
                     {props.trainings.filter(training => training.trainingCategoryId === catId)
                         .map(training => {
                             //console.log(training);
-                            return (<TrainingBox training={training} />);
+                            return (<TrainingBox 
+                                training={training}
+                                saveEnabled={props.saveEnabled}
+                                deleteEnabled={props.deleteEnabled} 
+                                trainingConditions={props.trainingConditions} />);
                     })}
                 </View>);  
             }

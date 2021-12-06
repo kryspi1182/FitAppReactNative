@@ -9,6 +9,7 @@ export interface UserParams {
     height: number,
     weight: number,
     difficulty: number,
+    weightTargetId: number,
     medicalConditions: UserMedicalCondition[],
     unwantedProducts: UserUnwantedProduct[],
     trainingConditions: UserTrainingCondition[]
