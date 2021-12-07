@@ -9,6 +9,7 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { ColorSchemeName, Pressable } from 'react-native';
+import { Button } from 'react-native-paper';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -21,6 +22,12 @@ import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../typ
 import LinkingConfiguration from './LinkingConfiguration';
 import TrainingScreen from '../screens/TrainingScreen';
 import UserSavedTrainingsScreen from '../screens/UserSavedTrainingsScreen';
+import DietHelp from '../components/Sections/Help/DietHelp';
+import DataHelp from '../components/Sections/Help/DataHelp';
+import SavedDietsHelp from '../components/Sections/Help/SavedDietsHelp';
+import TrainingHelp from '../components/Sections/Help/TrainingHelp';
+import SavedTrainingsHelp from '../components/Sections/Help/SavedTrainingsHelp';
+import ModalWithContent from '../components/common/ModalWithContent';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -58,13 +65,34 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
-
+  
   return (
     <BottomTab.Navigator
       initialRouteName="User"
-      screenOptions={{
+      screenOptions={({route}) => ({
         tabBarActiveTintColor: Colors[colorScheme].tint,
-      }}>
+        headerRight: () => {
+          var helpContent = <DataHelp />;
+          switch (route.name) {
+            case "Diet":
+              helpContent = <DietHelp />;
+            break;
+            case "User":
+              helpContent = <DataHelp />;
+            break;
+            case "UserSavedDiets":
+              helpContent = <SavedDietsHelp />;
+            break;
+            case "Training":
+              helpContent = <TrainingHelp />;
+            break;
+            case "UserSavedTrainings":
+              helpContent = <SavedTrainingsHelp />;
+            break;
+          }
+          return <ModalWithContent title={<FontAwesome name="question-circle" size={24} color="black" />} content={helpContent}/>
+        } 
+      })}>
       
       <BottomTab.Screen
         name="Diet"
@@ -76,20 +104,20 @@ function BottomTabNavigator() {
       />
 
       <BottomTab.Screen
-        name="User"
-        component={UserScreen}
-        options={{
-          title: 'User',
-          tabBarIcon: ({ color }) => <FontAwesomeIcon name="user" color={color} />,
-        }}
-      />
-
-      <BottomTab.Screen
         name="UserSavedDiets"
         component={UserSavedDietsScreen}
         options={{
           title: 'Saved Diets',
           tabBarIcon: ({ color }) => <FontAwesomeIcon name="calendar-o" color={color} />,
+        }}
+      />
+
+      <BottomTab.Screen
+        name="User"
+        component={UserScreen}
+        options={{
+          title: 'User',
+          tabBarIcon: ({ color }) => <FontAwesomeIcon name="user" color={color} />,
         }}
       />
 

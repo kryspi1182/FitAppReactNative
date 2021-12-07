@@ -26,7 +26,7 @@ const ExerciseBox: React.FC<Props> = (props) => {
     >
         <View>
             {props.severity == 0 && <FontAwesome name="check-circle" size={24} color="black" />}
-            {props.severity == TrainingConditionSeverityEnum.Unnoticeable && <MaterialCommunityIcons name="information-outline" size={24} color="black" />}
+            {props.severity == TrainingConditionSeverityEnum.Unnoticeable && <FontAwesome name="info-circle" size={24} color="black" />}
             {props.severity == TrainingConditionSeverityEnum.Mild && <FontAwesome name="warning" size={24} color="black" />}
         </View>
         <List.Item title="Series" description={props.series}/>

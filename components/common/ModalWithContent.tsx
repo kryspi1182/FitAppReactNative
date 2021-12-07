@@ -6,7 +6,7 @@ import { Button } from 'react-native-paper';
 import Dialog from "react-native-dialog";
 
 type Props = {
-    title: string,
+    title: string | React.ReactNode,
     content: React.ReactNode
 };
 
@@ -23,7 +23,7 @@ const ModalWithContent: React.FC<Props> = (props) => {
 
     return(<View style={styles.container}>
         <Dialog.Container visible={open}>
-            <Dialog.Title>{props.title}</Dialog.Title>
+            <Dialog.Title>{typeof props.title === "string" ? props.title : "Help" }</Dialog.Title>
                 {props.content}
             <Dialog.Button label="Close" onPress={handleClose} />
         </Dialog.Container>

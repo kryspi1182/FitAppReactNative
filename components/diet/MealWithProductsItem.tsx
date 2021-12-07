@@ -3,6 +3,8 @@ import { List, Chip } from 'react-native-paper';
 import { Button, Text, View, StyleSheet } from 'react-native';
 
 import { MealWithProducts } from '../../models/MealWithProducts';
+import ModalWithContent from '../common/ModalWithContent';
+import MealDetails from './MealDetails';
 
 type Props = {
     meal: MealWithProducts,
@@ -14,6 +16,7 @@ const MealWithProductsItem: React.FC<Props> = (props) => {
         title={props.label}
         style={styles.accordion}
     >
+        <ModalWithContent title="Details" content={<MealDetails mealId={props.meal.meal.id} />} />
         <List.Item title="Name" description={props.meal.meal.name}/>
         <List.Item title="Description" description={props.meal.meal.description}/>
         <List.Item title="Recipe" description={props.meal.meal.recipe}/>
