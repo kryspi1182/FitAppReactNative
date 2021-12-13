@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
+import { ColorSchemeName, Pressable, View } from 'react-native';
 import { Button } from 'react-native-paper';
 
 import Colors from '../constants/Colors';
@@ -28,6 +28,7 @@ import SavedDietsHelp from '../components/Sections/Help/SavedDietsHelp';
 import TrainingHelp from '../components/Sections/Help/TrainingHelp';
 import SavedTrainingsHelp from '../components/Sections/Help/SavedTrainingsHelp';
 import ModalWithContent from '../components/common/ModalWithContent';
+import Disclaimer from '../components/Sections/HomePage/Disclaimer';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -90,7 +91,10 @@ function BottomTabNavigator() {
               helpContent = <SavedTrainingsHelp />;
             break;
           }
-          return <ModalWithContent title={<FontAwesome name="question-circle" size={24} color="black" />} content={helpContent}/>
+          return (<View>
+              <ModalWithContent title={<FontAwesome name="info-circle" size={24} color="black" />} content={<Disclaimer />} />
+              <ModalWithContent title={<FontAwesome name="question-circle" size={24} color="black" />} content={helpContent}/>
+            </View>);
         } 
       })}>
       

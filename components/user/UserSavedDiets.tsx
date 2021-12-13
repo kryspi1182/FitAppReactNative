@@ -2,14 +2,19 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { EntityId } from '@reduxjs/toolkit';
 import { Text, View, ScrollView, StyleSheet } from 'react-native';
-import { List, Chip } from 'react-native-paper';
+import { List, Chip, Button } from 'react-native-paper';
 
-import { selectAllUserSavedDiets } from '../../store/userSavedDietsSlice';
+import { deleteUserSavedDiet, selectAllUserSavedDiets } from '../../store/userSavedDietsSlice';
 import WeekDietBox from '../diet/WeekDietBox';
 
 const UserSavedDiets: React.FC = () => {
     const dispatch = useDispatch();
     const userDiets = useSelector(selectAllUserSavedDiets);
+
+    const handleDelete = (id: EntityId) => {
+        dispatch(deleteUserSavedDiet(id));
+    };
+
     return(<ScrollView contentContainerStyle={styles.container}>
         {userDiets.map(userDiet => {
             let breakfasts = [] as EntityId[];
@@ -36,7 +41,8 @@ const UserSavedDiets: React.FC = () => {
                     break;
                 };
             }
-            return (<List.Accordion title={userDiet.name}>
+            return (<View>
+            <List.Accordion title={userDiet.name}>
                 <WeekDietBox 
                     breakfasts={breakfasts}
                     secondBreakfasts={secondBreakfasts}
@@ -45,7 +51,11 @@ const UserSavedDiets: React.FC = () => {
                     dinners={dinners}
                     key={userDiet.name}
                 />
-            </List.Accordion>)
+            </List.Accordion>
+            <View>
+                <Button onPress={() => handleDelete(userDiet.id)}>Delete</Button>
+            </View>
+            </View>)
         })}
     </ScrollView>);
 };

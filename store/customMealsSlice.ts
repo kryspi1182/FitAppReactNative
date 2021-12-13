@@ -10,7 +10,7 @@ import { UserDietParams } from '../models/UserDietParams';
 
 const customMealsAdapter = createEntityAdapter<Meal>();
 
-export const fetchMatchingCustomMeals = createAsyncThunk('meal/match', async (params: UserDietParams) => {
+export const fetchMatchingCustomMeals = createAsyncThunk('customMeal/match', async (params: UserDietParams) => {
     try {
         console.log(params);
         return await dietApi.getMatchingMeals(params);
@@ -18,6 +18,10 @@ export const fetchMatchingCustomMeals = createAsyncThunk('meal/match', async (pa
     catch (e) {
         return e.json();
     }
+});
+
+export const resetCustomMeals = createAsyncThunk('customMeal/reset', async () => {
+
 });
 
 export const {
@@ -33,6 +37,9 @@ const customMealsSlice = createSlice({
         builder.addCase(fetchMatchingCustomMeals.fulfilled, (state, action: PayloadAction<Array<Meal>>) => {
             if (action.payload)
                 customMealsAdapter.upsertMany(state, action);
+        })
+        .addCase(resetCustomMeals.fulfilled, (state, action) => {
+            customMealsAdapter.removeAll(state);
         })
     }
 });

@@ -18,9 +18,14 @@ import { selectAllTrainingConditionSeverities } from '../../store/trainingCondit
 import { AutocompleteItem } from '../common/AutocompleteItem';
 import { selectAllBodyTargets } from '../../store/bodyTargetsSlice';
 import { UserTrainingParams } from '../../models/UserTrainingParams';
-import { fetchMatchingTrainings } from '../../store/userTrainingsSlice';
+import { fetchMatchingTrainings, resetTrainings } from '../../store/userTrainingsSlice';
 
-const CustomTraining: React.FC = () => {
+type Props = {
+    notify: Function,
+    startLoading: Function
+};
+
+const CustomTraining: React.FC<Props> = (props) => {
     const dispatch = useDispatch();
     const allTrainingConditions = useSelector(selectAllTrainingConditions);
     const trainingConditionSeverities = useSelector(selectAllTrainingConditionSeverities);
@@ -73,6 +78,8 @@ const CustomTraining: React.FC = () => {
             bodyTarget: bodyTarget,
         },
         onSubmit: (values) => {
+            props.startLoading();
+            dispatch(resetTrainings());
             var params = {
                 trainingCategory: values.trainingCategory,
                 difficulty: values.difficulty,
@@ -80,6 +87,7 @@ const CustomTraining: React.FC = () => {
                 trainingConditions: values.trainingConditions
             } as UserTrainingParams;
             dispatch(fetchMatchingTrainings(params));
+            props.notify();
         }
     });
     return(<ScrollView contentContainerStyle={styles.container}>

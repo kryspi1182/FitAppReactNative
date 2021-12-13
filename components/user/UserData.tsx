@@ -22,6 +22,8 @@ import { UserUnwantedProduct } from '../../models/UserUnwantedProduct';
 import { UserTrainingCondition } from '../../models/UserTrainingCondition';
 import { DifficultyEnum } from '../../models/enums/DifficultyEnum';
 import AutocompleteInput from '../common/AutocompleteInput';
+import LoadingModal from '../common/LoadingModal';
+import { WeightTargetEnum } from '../../models/enums/WeightTargetEnum';
 
 const UserData: React.FC = () => {
     const user = useSelector(selectUser);
@@ -31,6 +33,14 @@ const UserData: React.FC = () => {
     const trainingConditions = useSelector(selectAllTrainingConditions);
     const trainingConditionSeverities = useSelector(selectAllTrainingConditionSeverities);
     const bodyTargets = useSelector(selectAllBodyTargets);
+
+    const [firstRender, setFirstRender] = React.useState(true);
+    const [loaded, setLoaded] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
 
     const mappedMedicalConditions = medicalConditions.map(x => {
         return {id: x.id, name: x.name} as AutocompleteItem;
@@ -86,6 +96,7 @@ const UserData: React.FC = () => {
     const [activity, setActivity] = React.useState(user.activity);
     const [gender, setGender] = React.useState(user.gender);
     const [difficulty, setDifficulty] = React.useState(user.difficultyId);
+    const [weightTargetId, setWeightTargetId] = React.useState(user.weightTargetId);
     const [genderText, setGenderText] = React.useState("");
     const [activityText, setActivityText] = React.useState("");
 
@@ -104,6 +115,10 @@ const UserData: React.FC = () => {
     React.useEffect(() => {
         formik.setFieldValue("difficulty", difficulty);
     }, [difficulty]);
+
+    React.useEffect(() => {
+        formik.setFieldValue("weightTargetId", weightTargetId);
+    }, [weightTargetId]);
 
     React.useEffect(() => {
         formik.setFieldValue('medicalConditions', selectedMedicalConditions);
@@ -145,10 +160,16 @@ const UserData: React.FC = () => {
         formik.setFieldValue("gender", gender);
     }, [gender]);
 
-    /*React.useEffect(() => {
-        if(user.weight !== 1) //TODO: first login logic to ensure data has been filled
+    React.useEffect(() => {
+        if(user.weight !== 1) {
             dispatch(fetchUserMacros(null));
-    }, [user]);*/
+            if (firstRender)
+                setFirstRender(false);
+            else
+                setLoaded(true);
+        } //TODO: first login logic to ensure data has been filled
+            
+    }, [user]);
 
     const formik = useFormik({
         initialValues: {
@@ -158,6 +179,7 @@ const UserData: React.FC = () => {
             age: age,
             gender: gender,
             difficulty: difficulty,
+            weightTargetId: weightTargetId,
             unwantedProducts: selectedUnwantedProducts,
             medicalConditions: selectedMedicalConditions,
             trainingConditions: selectedTrainingConditions
@@ -182,11 +204,15 @@ const UserData: React.FC = () => {
         }),
         validateOnChange: false,
         onSubmit: (values) => {
+            setLoaded(false);
+            handleOpen();
             dispatch(updateUser(values));
         }
     });
     return (
         <ScrollView contentContainerStyle={styles.container}>
+            {/*Did not use ModalWithContent here due to modal showing on a submit button, not a dedicated modal button*/}
+            <LoadingModal open={open} setOpen={setOpen} loaded={loaded} />
                 <Text>Age:</Text>
                 <NumberInput 
                     value={age}
@@ -223,6 +249,16 @@ const UserData: React.FC = () => {
                     <Picker.Item label="Light" value={1.35}/>
                     <Picker.Item label="Moderate" value={1.55}/>
                     <Picker.Item label="High" value={1.75}/>
+                </Picker>
+                <Divider />
+                <Text>Target:</Text>
+                <Picker
+                    selectedValue={weightTargetId}
+                    onValueChange={setWeightTargetId}
+                >
+                    <Picker.Item label="Lose weight" value={WeightTargetEnum.LoseWeight}/>
+                    <Picker.Item label="Maintain weight" value={WeightTargetEnum.MaintainWeight}/>
+                    <Picker.Item label="Gain weight" value={WeightTargetEnum.GainWeight}/>
                 </Picker>
                 <Divider />
                 <Text>Medical conditions:</Text>

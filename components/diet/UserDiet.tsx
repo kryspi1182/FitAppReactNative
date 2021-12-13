@@ -4,7 +4,7 @@ import { EntityId } from '@reduxjs/toolkit';
 import { Text, View, ScrollView, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 
-import { fetchBreakfast, fetchLunch, fetchDinner, fetchSnack, selectAllUserMeals, fetchMatchingMeals } from '../../store/userMealsSlice';
+import { selectAllUserMeals, fetchMatchingMeals, resetMeals } from '../../store/userMealsSlice';
 import { selectUserMacros, fetchUserMacros } from '../../store/userMacrosSlice';
 import { fetchProducts } from '../../store/productsSlice';
 import { selectUser } from '../../store/userSlice';
@@ -16,6 +16,7 @@ import { DietTypeEnum } from '../../models/enums/DietTypeEnum';
 import { fetchMedicalConditions } from '../../store/medicalConditionsSlice';
 import { fetchMeals } from '../../store/mealsSlice';
 import CustomDiet from './CustomDiet';
+import LoadingModal from '../common/LoadingModal';
 
 const UserDiet: React.FC = () => {
     const dispatch = useDispatch();
@@ -26,6 +27,12 @@ const UserDiet: React.FC = () => {
     const [generateCustomDiet, setGenerateCustomDiet] = React.useState(false);
     const [step, setStep] = React.useState(1);
     const [title, setTitle] = React.useState("Generate diet based on your:");
+    const [loaded, setLoaded] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
 
     const macros = useSelector(selectUserMacros);
     const meals = useSelector(selectAllUserMeals);
@@ -72,6 +79,9 @@ const UserDiet: React.FC = () => {
     }, [dispatch]);
     React.useEffect(() => {
         if (user.id !== "0" && macros.calories > 0 && startDietProcess) {
+            setLoaded(false);
+            handleOpen();
+            dispatch(resetMeals());
             const breakfastParams = {
                 macros: macros,
                 unwantedProductIds: user.unwantedProducts.map(x => x.productId),
@@ -115,6 +125,14 @@ const UserDiet: React.FC = () => {
             setStep(3);
         }
     }, [startDietProcess]);
+
+    React.useEffect(() => {
+        if (startCustomDietProcess) {
+            setLoaded(false);
+            handleOpen();
+        }
+    }, [startCustomDietProcess]);
+
     React.useEffect(() => {
         if(meals.some((meal) => meal.mealCategoryId === MealCategoryEnum.Breakfast) 
         && meals.some((meal) => meal.mealCategoryId === MealCategoryEnum.SecondBreakfast)
@@ -122,6 +140,7 @@ const UserDiet: React.FC = () => {
         && meals.some((meal) => meal.mealCategoryId === MealCategoryEnum.Snack)
         && meals.some((meal) => meal.mealCategoryId === MealCategoryEnum.Dinner)
         && startDietProcess) {
+            setLoaded(true);
             setGenerateDiet(true);
             setGenerateCustomDiet(false);
         }    
@@ -133,12 +152,15 @@ const UserDiet: React.FC = () => {
         && customMeals.some((meal) => meal.mealCategoryId === MealCategoryEnum.Snack)
         && customMeals.some((meal) => meal.mealCategoryId === MealCategoryEnum.Dinner)
         && startCustomDietProcess) {
+            setLoaded(true);
             setGenerateCustomDiet(true);
             setGenerateDiet(false);
         }   
     }, [customMeals]);
     return(<>
     <ScrollView contentContainerStyle={styles.container}>
+        {/*Did not use ModalWithContent here due to modal showing on a submit button, not a dedicated modal button*/}
+        <LoadingModal open={open} setOpen={setOpen} loaded={loaded} />
         <Text>{title}</Text>
         {(chosenOption === "none" && <>
             <Button 
@@ -165,7 +187,7 @@ const UserDiet: React.FC = () => {
                 mode="contained"
                 compact={true}
                 style={styles.button}
-                onPress={() => {setStartDietProcess(true); console.log("press");}}
+                onPress={() => {setStartDietProcess(true);}}
             >Generate diet</Button>
         </>)}
         {(chosenOption === "form" && <>

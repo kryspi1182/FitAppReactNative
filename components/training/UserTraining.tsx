@@ -4,12 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Text, View, ScrollView, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 
-import { fetchMatchingTrainings, fetchMatchingTrainingsUserData, selectAllUserTrainings } from '../../store/userTrainingsSlice';
+import { fetchMatchingTrainings, fetchMatchingTrainingsUserData, resetTrainings, selectAllUserTrainings } from '../../store/userTrainingsSlice';
 import { UserTrainingParams } from '../../models/UserTrainingParams';
 import TrainingResult from './TrainingResult';
 import CustomTraining from './CustomTraining';
 import { selectUser } from '../../store/userSlice';
 import { selectAllTrainingConditions } from '../../store/trainingConditionsSlice';
+import LoadingModal from '../common/LoadingModal';
+import ErrorBox from '../common/ErrorBox';
 
 const UserTraining: React.FC = () => {
     const dispatch = useDispatch();
@@ -20,6 +22,27 @@ const UserTraining: React.FC = () => {
     const [showTraining, setShowTraining] = React.useState(false);
     const [showError, setShowError] = React.useState(false);
     const [notFirstRender, setNotFirstRender] = React.useState(false);
+    const [loaded, setLoaded] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const startLoading = () => {
+        setLoaded(false);
+        handleOpen();
+    };
+
+    const notify = () => {
+        setNotFirstRender(true);
+        setTimeout(() => {
+            if (!loaded) {
+                setShowError(true);
+                setLoaded(true);
+            }
+        }, 10000);
+    };
 
     const userTrainings = useSelector(selectAllUserTrainings);
     const trainingConditions = useSelector(selectAllTrainingConditions);
@@ -51,18 +74,21 @@ const UserTraining: React.FC = () => {
                 setStartTrainingProcess(false);
                 setShowTraining(false);
                 setShowError(false);
-                //setNotFirstRender(false);
+                setNotFirstRender(false);
                 break;
         }
     }, [chosenOption]);
     React.useEffect(() => {
         if(startTrainingProcess) {
             //setNotFirstRender(true);
+            startLoading();
+            dispatch(resetTrainings());
             let params = {
                 difficulty: user.difficultyId,
                 trainingConditions: trainingConditions.filter(x => user.trainingConditions.some(y => y.trainingConditionId === x.id)),
             } as UserTrainingParams;
             dispatch(fetchMatchingTrainingsUserData(params));
+            notify();
         }
     }, [startTrainingProcess]);
 
@@ -70,6 +96,7 @@ const UserTraining: React.FC = () => {
         if(userTrainings.length > 0) {
             setShowTraining(true);
             setShowError(false);
+            setLoaded(true);
         }
         else {
             setShowTraining(false);
@@ -79,6 +106,8 @@ const UserTraining: React.FC = () => {
     
     return(<>
         <ScrollView contentContainerStyle={styles.container}>
+            {/*Did not use ModalWithContent here due to modal showing on a submit button, not a dedicated modal button*/}
+            <LoadingModal open={open} setOpen={setOpen} loaded={loaded} />
             <Text>{title}</Text>
         {(chosenOption === "none" && <>
             <Button 
@@ -115,10 +144,11 @@ const UserTraining: React.FC = () => {
                 compact={true}
                 style={styles.button}
             >Back</Button>
-            <CustomTraining />
+            <CustomTraining notify={notify} startLoading={startLoading}/>
         </>)}
 
-            {(showTraining && <TrainingResult trainingConditions={trainingConditions.filter(x => user.trainingConditions.some(y => y.trainingConditionId === x.id))}/>)}
+            {(showTraining && notFirstRender && <TrainingResult trainingConditions={trainingConditions.filter(x => user.trainingConditions.some(y => y.trainingConditionId === x.id))}/>)}
+            {(showError && notFirstRender && !showTraining && <ErrorBox message="No matching trainings were found." />)}
     </ScrollView>
     </>)
 };

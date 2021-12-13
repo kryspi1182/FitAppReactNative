@@ -4,7 +4,7 @@ import { EntityId } from '@reduxjs/toolkit';
 
 import { getAllEnumEntries, getAllEnumKeys, getAllEnumValues } from 'enum-for';
 import { Text, View, ScrollView, StyleSheet } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, List } from 'react-native-paper';
 import Dialog from "react-native-dialog";
 
 import { selectAllUserTrainings } from '../../store/userTrainingsSlice';
@@ -27,17 +27,18 @@ const TrainingList: React.FC<Props> = (props) => {
     return(<ScrollView contentContainerStyle={styles.container}>
         {trainingCategoryIds.map(catId => {
             if (props.trainings.some(training => training.trainingCategoryId === catId)) {
-                return (<View style={styles.container}>
-                    {props.trainings.filter(training => training.trainingCategoryId === catId)
-                        .map(training => {
-                            //console.log(training);
-                            return (<TrainingBox 
-                                training={training}
-                                saveEnabled={props.saveEnabled}
-                                deleteEnabled={props.deleteEnabled} 
-                                trainingConditions={props.trainingConditions} />);
-                    })}
-                </View>);  
+                return (<List.Accordion title={trainingCategories[catId-1]}>
+                    <View style={styles.container}>
+                        {props.trainings.filter(training => training.trainingCategoryId === catId)
+                            .map(training => {
+                                return (<TrainingBox 
+                                    training={training}
+                                    saveEnabled={props.saveEnabled}
+                                    deleteEnabled={props.deleteEnabled} 
+                                    trainingConditions={props.trainingConditions} />);
+                        })}
+                    </View>
+                </List.Accordion>);  
             }
         })}
     </ScrollView>)

@@ -13,13 +13,13 @@ type Props = {
 const MacrosBox: React.FC<Props> = (props) => {
     return(<ScrollView>
         <List.Accordion title="Macros per 100g">
-            <List.Item title="Calories" description={props.macros.calories} />
-            <List.Item title="Carbohydrates" description={props.macros.carbohydrates} />
-            <List.Item title="Protein" description={props.macros.protein} />
-            <List.Item title="Fat" description={props.macros.fat} />
-            <List.Item title="Sugar" description={props.macros.sugar} />
-            <List.Item title="Fibre" description={props.macros.fibre} />
-            <List.Item title="Salt" description={props.macros.salt} />
+            <List.Item title="Calories" description={props.macros.calories + " kcal"} />
+            <List.Item title="Carbohydrates" description={props.macros.carbohydrates + " g"} />
+            <List.Item title="Protein" description={props.macros.protein + " g"} />
+            <List.Item title="Fat" description={props.macros.fat + " g"} />
+            <List.Item title="Sugar" description={props.macros.sugar + " g"} />
+            <List.Item title="Fibre" description={props.macros.fibre + " g"} />
+            <List.Item title="Salt" description={props.macros.salt + " g"} />
         </List.Accordion>
     </ScrollView>);
 };

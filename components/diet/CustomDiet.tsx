@@ -9,7 +9,7 @@ import { Text, View, ScrollView, StyleSheet } from 'react-native';
 
 import { selectAllMedicalConditions } from '../../store/medicalConditionsSlice';
 import { selectAllProducts } from '../../store/productsSlice';
-import { fetchMatchingCustomMeals } from '../../store/customMealsSlice';
+import { fetchMatchingCustomMeals, resetCustomMeals } from '../../store/customMealsSlice';
 //import { AutocompleteItem } from '../common/Autocomplete/AutocompleteItem';
 //import AutocompleteInput from '../common/Autocomplete/AutocompleteInput';
 import { Macros } from '../../models/Macros';
@@ -129,7 +129,7 @@ const CustomDiet: React.FC<Props> = (props) => {
                 .required(),
         }),
         onSubmit: (values) => {
-            //console.log(values);
+            dispatch(resetCustomMeals());
             const macros = {
                 calories: formik.values.calories,
                 fat: formik.values.fat,
