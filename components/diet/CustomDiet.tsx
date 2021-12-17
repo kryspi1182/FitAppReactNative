@@ -19,7 +19,7 @@ import { MealCategoryEnum } from '../../models/enums/MealCategoryEnum';
 import { fetchMatchingMeals } from '../../store/userMealsSlice';
 import { AutocompleteItem } from '../common/AutocompleteItem';
 import NumberInput from '../common/NumberInput';
-import { Button, Divider } from 'react-native-paper';
+import { Button, Divider, useTheme } from 'react-native-paper';
 import AutocompleteInput from '../common/AutocompleteInput';
 
 type Props = {
@@ -28,6 +28,7 @@ type Props = {
 
 const CustomDiet: React.FC<Props> = (props) => {
     const dispatch = useDispatch();
+    const theme = useTheme();
     const medicalConditions = useSelector(selectAllMedicalConditions);
     const products = useSelector(selectAllProducts);
     const mappedMedicalConditions = medicalConditions.map(x => {
@@ -243,6 +244,7 @@ const CustomDiet: React.FC<Props> = (props) => {
                         compact={true}
                         style={styles.button}
                         onPress={formik.handleSubmit}
+                        theme={theme}
                     >Submit</Button>
             </View>
             
@@ -258,7 +260,7 @@ const styles = StyleSheet.create({
         width: '75%',
         alignSelf: 'center',
         margin: 10,
-        backgroundColor: '#4c8bf5'
+        //backgroundColor: '#4c8bf5'
     },
     formControl: {
         width: '33%'

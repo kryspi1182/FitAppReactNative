@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { EntityId } from '@reduxjs/toolkit';
 import { Text, View, ScrollView, StyleSheet } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, useTheme } from 'react-native-paper';
 import Dialog from "react-native-dialog";
 
 type Props = {
@@ -11,6 +11,7 @@ type Props = {
 };
 
 const ModalWithContent: React.FC<Props> = (props) => {
+    const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
     const handleOpen = () => {
@@ -27,7 +28,7 @@ const ModalWithContent: React.FC<Props> = (props) => {
                 {props.content}
             <Dialog.Button label="Close" onPress={handleClose} />
         </Dialog.Container>
-        <Button onPress={handleOpen}>{props.title}</Button>
+        <Button onPress={handleOpen} theme={theme}>{props.title}</Button>
     </View>)
 };
 

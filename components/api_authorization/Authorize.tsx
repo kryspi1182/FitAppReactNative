@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import { Button, Divider } from 'react-native-paper';
+import { Button, Divider, useTheme } from 'react-native-paper';
 import * as AuthSession from 'expo-auth-session';
 import * as WebBrowser from 'expo-web-browser';
 import * as Linking from 'expo-linking';
@@ -32,6 +32,18 @@ const redirectUri = AuthSession.makeRedirectUri({
 });
 
 const Authorize: React.FC = () => {
+  const theme = useTheme();
+  const styles = StyleSheet.create({
+    container: {
+        padding: 10
+    },
+    button: {
+        maxWidth: '75%',
+        alignSelf: 'center',
+        margin: 10
+    }
+  });
+  console.log(theme);
   const [ready, setReady] = React.useState(false);
   const [acc_token, setAcc_token] = React.useState("");
   const [userInfo, setUserInfo] = React.useState({} as UserIdentityInfo);
@@ -101,25 +113,19 @@ const Authorize: React.FC = () => {
     if(user.id !== "0")
       setShowButton(false);
   }, [user]);
-
+  
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      {ready && showButton && <Button style={styles.button} disabled={!request} onPress={() => promptAsync({ useProxy })}>Login</Button>}
+      {ready && showButton && 
+        <Button
+          style={styles.button}
+          disabled={!request} 
+          onPress={() => promptAsync({ useProxy })} theme={theme} mode='contained'>Login</Button>}
       {result && <Text>{JSON.stringify(result, null, 2)}</Text>}
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-      padding: 10
-  },
-  button: {
-      maxWidth: '75%',
-      alignSelf: 'center',
-      margin: 10,
-      backgroundColor: '#4c8bf5'
-  }
-});
+
 
 export default Authorize;

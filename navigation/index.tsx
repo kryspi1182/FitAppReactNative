@@ -29,6 +29,8 @@ import TrainingHelp from '../components/Sections/Help/TrainingHelp';
 import SavedTrainingsHelp from '../components/Sections/Help/SavedTrainingsHelp';
 import ModalWithContent from '../components/common/ModalWithContent';
 import Disclaimer from '../components/Sections/HomePage/Disclaimer';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../store/userSlice';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -66,7 +68,8 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
-  
+  const user = useSelector(selectUser);
+  const loggedIn = user.id === "0" ? false : true;
   return (
     <BottomTab.Navigator
       initialRouteName="User"
@@ -98,23 +101,23 @@ function BottomTabNavigator() {
         } 
       })}>
       
-      <BottomTab.Screen
+      {loggedIn && <BottomTab.Screen
         name="Diet"
         component={DietScreen}
         options={{
           title: 'Diet',
           tabBarIcon: ({ color }) => <MaterialCommunityIcon name="food-apple" color={color} />,
         }}
-      />
+      />}
 
-      <BottomTab.Screen
+      {loggedIn && <BottomTab.Screen
         name="UserSavedDiets"
         component={UserSavedDietsScreen}
         options={{
           title: 'Saved Diets',
           tabBarIcon: ({ color }) => <FontAwesomeIcon name="calendar-o" color={color} />,
         }}
-      />
+      />}
 
       <BottomTab.Screen
         name="User"
@@ -125,23 +128,23 @@ function BottomTabNavigator() {
         }}
       />
 
-      <BottomTab.Screen
+      {loggedIn && <BottomTab.Screen
         name="Training"
         component={TrainingScreen}
         options={{
           title: 'Training',
           tabBarIcon: ({ color }) => <MaterialCommunityIcon name="dumbbell" color={color} />,
         }}
-      />
+      />}
 
-      <BottomTab.Screen
+      {loggedIn && <BottomTab.Screen
         name="UserSavedTrainings"
         component={UserSavedTrainingsScreen}
         options={{
           title: 'Saved trainings',
           tabBarIcon: ({ color }) => <MaterialCommunityIcon name="format-line-weight" color={color} />,
         }}
-      />  
+      />}  
     </BottomTab.Navigator>
   );
 }

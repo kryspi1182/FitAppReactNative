@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { EntityId } from '@reduxjs/toolkit';
 import { Text, View, ScrollView, StyleSheet } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, useTheme } from 'react-native-paper';
 
 import { selectAllUserMeals, fetchMatchingMeals, resetMeals } from '../../store/userMealsSlice';
 import { selectUserMacros, fetchUserMacros } from '../../store/userMacrosSlice';
@@ -20,6 +20,7 @@ import LoadingModal from '../common/LoadingModal';
 
 const UserDiet: React.FC = () => {
     const dispatch = useDispatch();
+    const theme = useTheme();
     const [chosenOption, setChosenOption] = React.useState("none");
     const [startDietProcess, setStartDietProcess] = React.useState(false);
     const [startCustomDietProcess, setStartCustomDietProcess] = React.useState(false);
@@ -168,12 +169,14 @@ const UserDiet: React.FC = () => {
                 compact={true}
                 style={styles.button}
                 onPress={() => {setChosenOption("data")}}
+                theme={theme}
             >Your data</Button>
             <Button 
                 mode="contained"
                 compact={true}
                 style={styles.button}
                 onPress={() => {setChosenOption("form")}}
+                theme={theme}
             >Macros of your choice</Button>
         </>)}
         {(chosenOption === "data" && <>
@@ -182,12 +185,14 @@ const UserDiet: React.FC = () => {
                 compact={true}
                 style={styles.button}
                 onPress={() => {setChosenOption("none")}}
+                theme={theme}
             >Back</Button>
             <Button 
                 mode="contained"
                 compact={true}
                 style={styles.button}
                 onPress={() => {setStartDietProcess(true);}}
+                theme={theme}
             >Generate diet</Button>
         </>)}
         {(chosenOption === "form" && <>
@@ -196,6 +201,7 @@ const UserDiet: React.FC = () => {
                 compact={true}
                 style={styles.button}
                 onPress={() => {setChosenOption("none")}}
+                theme={theme}
             >Back</Button>
             <CustomDiet setStartProcess={setStartCustomDietProcess} />
         </>)}
@@ -214,7 +220,7 @@ const styles = StyleSheet.create({
         width: '75%',
         alignSelf: 'center',
         margin: 10,
-        backgroundColor: '#4c8bf5'
+        //backgroundColor: '#4c8bf5'
     }
   });
 

@@ -4,7 +4,7 @@ import { EntityId } from '@reduxjs/toolkit';
 
 import { Text, View, ScrollView, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { Button, Divider } from 'react-native-paper';
+import { Button, Divider, useTheme } from 'react-native-paper';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -27,6 +27,7 @@ type Props = {
 
 const CustomTraining: React.FC<Props> = (props) => {
     const dispatch = useDispatch();
+    const theme = useTheme();
     const allTrainingConditions = useSelector(selectAllTrainingConditions);
     const trainingConditionSeverities = useSelector(selectAllTrainingConditionSeverities);
     const bodyTargets = useSelector(selectAllBodyTargets);
@@ -147,6 +148,7 @@ const CustomTraining: React.FC<Props> = (props) => {
                     compact={true}
                     style={styles.button}
                     onPress={formik.handleSubmit}
+                    theme={theme}
                 >
                     Submit
                 </Button>
@@ -161,7 +163,7 @@ const styles = StyleSheet.create({
         width: '75%',
         alignSelf: 'center',
         margin: 10,
-        backgroundColor: '#4c8bf5'
+        //backgroundColor: '#4c8bf5'
     },
     formControl: {
         width: '33%'

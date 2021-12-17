@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
-import { Button, Divider } from 'react-native-paper';
+import { Button, Divider, useTheme } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
 
 import { useFormik } from 'formik';
@@ -28,6 +28,7 @@ import { WeightTargetEnum } from '../../models/enums/WeightTargetEnum';
 const UserData: React.FC = () => {
     const user = useSelector(selectUser);
     const dispatch = useDispatch();
+    const theme = useTheme();
     const medicalConditions = useSelector(selectAllMedicalConditions);
     const products = useSelector(selectAllProducts);
     const trainingConditions = useSelector(selectAllTrainingConditions);
@@ -304,6 +305,7 @@ const UserData: React.FC = () => {
                     compact={true}
                     style={styles.button}
                     onPress={formik.handleSubmit}
+                    theme={theme}
                 >Submit</Button>
         </ScrollView>
     )
@@ -317,7 +319,7 @@ const styles = StyleSheet.create({
         maxWidth: '75%',
         alignSelf: 'center',
         margin: 10,
-        backgroundColor: '#4c8bf5'
+        //backgroundColor: '#4c8bf5'
     }
 });
 

@@ -11,7 +11,7 @@ import { Exercise } from '../../models/Exercise';
 import { addUserSavedTraining, deleteUserSavedTraining, selectAllUserSavedTrainings } from '../../store/userSavedTrainingsSlice';
 import { UserSavedTrainingParams } from '../../models/UserSavedTrainingParams';
 import { selectUser } from '../../store/userSlice';
-import { List, Button } from 'react-native-paper';
+import { List, Button, useTheme } from 'react-native-paper';
 import { TrainingCondition } from '../../models/TrainingCondition';
 
 type Props = {
@@ -29,6 +29,7 @@ type ExerciseWithReps = {
 
 const TrainingBox: React.FC<Props> = (props) => {
     const dispatch = useDispatch();
+    const theme = useTheme();
     const exercises = useSelector(selectAllExercises);
     const userSavedTrainings = useSelector(selectAllUserSavedTrainings);
     const user = useSelector(selectUser);
@@ -85,13 +86,13 @@ const TrainingBox: React.FC<Props> = (props) => {
             </View>
         </View>
         {(props.saveEnabled && !saved && <View>
-                <Button onPress={handleSave}>Save</Button>
+                <Button onPress={handleSave} theme={theme}>Save</Button>
             </View>)}
             {(props.saveEnabled && saved && <View>
                 <Button disabled>Saved</Button>
             </View>)}
             {(props.deleteEnabled && saved && <View>
-                <Button onPress={handleDelete}>Delete</Button>
+                <Button onPress={handleDelete} theme={theme}>Delete</Button>
             </View>)}
                     
     </List.Accordion>);

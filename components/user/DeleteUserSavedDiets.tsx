@@ -7,6 +7,7 @@ import { deleteUserSavedDiet, selectAllUserSavedDiets } from '../../store/userSa
 
 const DeleteUserSavedDiets: React.FC = () => {
     const dispatch = useDispatch();
+    const theme = useTheme();
     const userSavedDiets = useSelector(selectAllUserSavedDiets);
     const handleDelete = (id: EntityId) => {
         dispatch(deleteUserSavedDiet(id));
@@ -20,7 +21,7 @@ const DeleteUserSavedDiets: React.FC = () => {
         </View>
         {userSavedDiets.map(savedDiet => <View>
                 <Text>{savedDiet.name}</Text>
-                <Button onPress={() => handleDelete(savedDiet.id)}>Delete</Button>
+                <Button onPress={() => handleDelete(savedDiet.id)} theme={theme}>Delete</Button>
         </View>)}
     </ScrollView>)
 };

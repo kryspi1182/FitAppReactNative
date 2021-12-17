@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Text, View, ScrollView, StyleSheet } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, useTheme } from 'react-native-paper';
 
 import { fetchMatchingTrainings, fetchMatchingTrainingsUserData, resetTrainings, selectAllUserTrainings } from '../../store/userTrainingsSlice';
 import { UserTrainingParams } from '../../models/UserTrainingParams';
@@ -15,6 +15,7 @@ import ErrorBox from '../common/ErrorBox';
 
 const UserTraining: React.FC = () => {
     const dispatch = useDispatch();
+    const theme = useTheme();
     const [chosenOption, setChosenOption] = React.useState("none");
     const [step, setStep] = React.useState(1);
     const [title, setTitle] = React.useState("Find trainings based on:");
@@ -115,12 +116,14 @@ const UserTraining: React.FC = () => {
                 mode="contained"
                 compact={true}
                 style={styles.button}
+                theme={theme}
             >Your data (recommended for beginners)</Button>
             <Button 
                 onPress={() => {setChosenOption("form")}}
                 mode="contained"
                 compact={true}
                 style={styles.button}
+                theme={theme}
             >Parameters of your choice</Button>
         </>)}
         {(chosenOption === "data" && <>
@@ -129,12 +132,14 @@ const UserTraining: React.FC = () => {
                 mode="contained"
                 compact={true}
                 style={styles.button}
+                theme={theme}
             >Back</Button>
             <Button 
                 onPress={() => {setStartTrainingProcess(true)}}
                 mode="contained"
                 compact={true}
                 style={styles.button}
+                theme={theme}
             >Find trainings</Button>
         </>)}
         {(chosenOption === "form" && <>
@@ -143,6 +148,7 @@ const UserTraining: React.FC = () => {
                 mode="contained"
                 compact={true}
                 style={styles.button}
+                theme={theme}
             >Back</Button>
             <CustomTraining notify={notify} startLoading={startLoading}/>
         </>)}
@@ -161,7 +167,7 @@ const styles = StyleSheet.create({
         width: '75%',
         alignSelf: 'center',
         margin: 10,
-        backgroundColor: '#4c8bf5'
+        //backgroundColor: '#4c8bf5'
     }
   });
 
