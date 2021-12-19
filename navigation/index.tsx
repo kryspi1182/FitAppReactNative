@@ -72,7 +72,7 @@ function RootNavigator() {
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
-        options={{ title: "Oops!" }}
+        options={{ title: "Welcome!" }}
       />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
@@ -130,6 +130,7 @@ function BottomTabNavigator() {
                     <FontAwesome name="info-circle" size={24} color="black" />
                   }
                   content={<Disclaimer />}
+                  buttonStyle={{}}
                 />
               </View>
               <View style={{ width: 40 }}>
@@ -142,6 +143,7 @@ function BottomTabNavigator() {
                     />
                   }
                   content={helpContent}
+                  buttonStyle={{}}
                 />
               </View>
             </View>

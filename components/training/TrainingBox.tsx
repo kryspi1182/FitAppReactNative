@@ -110,7 +110,7 @@ const TrainingBox: React.FC<Props> = (props) => {
         </View>
         {props.saveEnabled && !saved && (
           <View>
-            <Button onPress={handleSave} theme={theme}>
+            <Button onPress={handleSave} theme={theme} style={styles.button}>
               Save
             </Button>
           </View>
