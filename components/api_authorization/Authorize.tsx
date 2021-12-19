@@ -34,13 +34,12 @@ const redirectUri = AuthSession.makeRedirectUri({
 const Authorize: React.FC = () => {
   const theme = useTheme();
   const styles = StyleSheet.create({
-    container: {
-      padding: 10,
-    },
+    container: {},
     button: {
       maxWidth: "75%",
       alignSelf: "center",
-      margin: 10,
+      marginTop: "50%",
+      marginBottom: "50%",
     },
   });
   const [ready, setReady] = React.useState(false);
@@ -114,7 +113,7 @@ const Authorize: React.FC = () => {
   }, [user]);
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View style={styles.container}>
       {ready && showButton && (
         <Button
           style={styles.button}
