@@ -1,5 +1,6 @@
 import { EntityId } from "@reduxjs/toolkit";
 import { UserMedicalCondition } from "./UserMedicalCondition";
+import { UserTrainingCondition } from "./UserTrainingCondition";
 import { UserUnwantedProduct } from "./UserUnwantedProduct";
 
 export interface User {
@@ -11,6 +12,9 @@ export interface User {
     gender: number,
     height: number,
     weight: number,
+    difficultyId: number,
+    weightTargetId: number,
     medicalConditions: UserMedicalCondition[],
-    unwantedProducts: UserUnwantedProduct[]
+    unwantedProducts: UserUnwantedProduct[],
+    trainingConditions: UserTrainingCondition[]
 };

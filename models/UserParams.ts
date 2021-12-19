@@ -1,4 +1,5 @@
 import { UserMedicalCondition } from "./UserMedicalCondition";
+import { UserTrainingCondition } from "./UserTrainingCondition";
 import { UserUnwantedProduct } from "./UserUnwantedProduct";
 
 export interface UserParams {
@@ -7,6 +8,9 @@ export interface UserParams {
     gender: number,
     height: number,
     weight: number,
+    difficulty: number,
+    weightTargetId: number,
     medicalConditions: UserMedicalCondition[],
-    unwantedProducts: UserUnwantedProduct[]
+    unwantedProducts: UserUnwantedProduct[],
+    trainingConditions: UserTrainingCondition[]
 };

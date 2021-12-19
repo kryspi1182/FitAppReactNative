@@ -20,6 +20,7 @@
     "@reduxjs/toolkit": "^1.6.2",
     "axios": "^0.22.0",
     "definitely-typed": "^0.0.4",
+    "enum-for": "^0.0.5",
     "expo": "~42.0.1",
     "expo-asset": "~8.3.2",
     "expo-auth-session": "~3.3.1",
