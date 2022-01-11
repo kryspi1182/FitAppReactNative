@@ -1,3 +1,5 @@
+//Program powstał na Wydziale Informatyki Politechniki Białostockiej
+
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import MultiSelect from "react-native-multiple-select";

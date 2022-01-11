@@ -1,3 +1,5 @@
+//Program powstał na Wydziale Informatyki Politechniki Białostockiej
+
 import { PROPERTY_TYPES } from "@babel/types";
 import { setNestedObjectValues } from "formik";
 import * as React from "react";

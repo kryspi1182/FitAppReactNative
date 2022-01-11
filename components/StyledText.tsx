@@ -1,7 +1,11 @@
-import * as React from 'react';
+//Program powstał na Wydziale Informatyki Politechniki Białostockiej
 
-import { Text, TextProps } from './Themed';
+import * as React from "react";
+
+import { Text, TextProps } from "./Themed";
 
 export function MonoText(props: TextProps) {
-  return <Text {...props} style={[props.style, { fontFamily: 'space-mono' }]} />;
+  return (
+    <Text {...props} style={[props.style, { fontFamily: "space-mono" }]} />
+  );
 }

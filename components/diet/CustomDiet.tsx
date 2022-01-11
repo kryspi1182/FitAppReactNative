@@ -1,3 +1,5 @@
+//Program powstał na Wydziale Informatyki Politechniki Białostockiej
+
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { EntityId } from "@reduxjs/toolkit";
@@ -13,8 +15,6 @@ import {
   fetchMatchingCustomMeals,
   resetCustomMeals,
 } from "../../store/customMealsSlice";
-//import { AutocompleteItem } from '../common/Autocomplete/AutocompleteItem';
-//import AutocompleteInput from '../common/Autocomplete/AutocompleteInput';
 import { Macros } from "../../models/Macros";
 import { dietApi } from "../api_communication/DietApi";
 import { UserDietParams } from "../../models/UserDietParams";

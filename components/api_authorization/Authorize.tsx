@@ -1,3 +1,5 @@
+//Program powstał na Wydziale Informatyki Politechniki Białostockiej
+
 import * as React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Button, Divider, useTheme } from "react-native-paper";
@@ -46,7 +48,7 @@ const Authorize: React.FC = () => {
   const [acc_token, setAcc_token] = React.useState("");
   const [userInfo, setUserInfo] = React.useState({} as UserIdentityInfo);
   const [showButton, setShowButton] = React.useState(true);
-  const discovery = AuthSession.useAutoDiscovery("http://192.168.0.15:25415");
+  const discovery = AuthSession.useAutoDiscovery("http://192.168.0.26:25415");
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   React.useEffect(() => {

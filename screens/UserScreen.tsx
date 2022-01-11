@@ -1,3 +1,5 @@
+//Program powstał na Wydziale Informatyki Politechniki Białostockiej
+
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";

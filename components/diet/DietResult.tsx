@@ -1,3 +1,5 @@
+//Program powstał na Wydziale Informatyki Politechniki Białostockiej
+
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { EntityId } from "@reduxjs/toolkit";
@@ -164,17 +166,6 @@ const DietResult: React.FC<Props> = (props) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {/* <View style={styles.container}>
-            <Dialog.Container visible={showDialog}>
-                <Dialog.Title>Save diet</Dialog.Title>
-                <Dialog.Description>
-                Enter diet name
-                </Dialog.Description>
-                <Dialog.Input onChangeText={(text) => setDietName(text)}/>
-                <Dialog.Button label="Cancel" onPress={handleCancel} />
-                <Dialog.Button label="Save" onPress={handleSave} />
-            </Dialog.Container>
-        </View> */}
       {dietReady &&
         dietBreakfast.length === 7 &&
         dietSecondBreakfast.length === 7 &&
@@ -189,9 +180,6 @@ const DietResult: React.FC<Props> = (props) => {
             dinners={dietDinner}
           />
         )}
-      {/* {(!dietSaved && <Button onPress={() => setShowDialog(true)}>
-            Save diet
-        </Button>)} */}
       {!dietSaved && (
         <ModalWithContent
           title="Save diet"
