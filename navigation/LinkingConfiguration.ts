@@ -3,32 +3,57 @@
  * https://reactnavigation.org/docs/deep-linking
  * https://reactnavigation.org/docs/configuring-links
  */
+//Program powstał na Wydziale Informatyki Politechniki Białostockiej
+import { LinkingOptions } from "@react-navigation/native";
+import * as Linking from "expo-linking";
 
-import { LinkingOptions } from '@react-navigation/native';
-import * as Linking from 'expo-linking';
-
-import { RootStackParamList } from '../types';
+import { RootStackParamList } from "../types";
 
 const linking: LinkingOptions<RootStackParamList> = {
-  prefixes: [Linking.makeUrl('/')],
+  prefixes: [Linking.makeUrl("/")],
   config: {
     screens: {
       Root: {
         screens: {
           TabOne: {
             screens: {
-              TabOneScreen: 'one',
+              TabOneScreen: "one",
             },
           },
           TabTwo: {
             screens: {
-              TabTwoScreen: 'two',
+              TabTwoScreen: "two",
+            },
+          },
+          User: {
+            screens: {
+              UserScreen: "user",
+            },
+          },
+          Diet: {
+            screens: {
+              DietScreen: "diet",
+            },
+          },
+          UserSavedDiets: {
+            screens: {
+              UserSavedDietsScreen: "userSavedDiets",
+            },
+          },
+          Training: {
+            screens: {
+              TrainingScreen: "training",
+            },
+          },
+          UserSavedTrainings: {
+            screens: {
+              UserSavedTrainingsScreen: "userSavedTrainings",
             },
           },
         },
       },
-      Modal: 'modal',
-      NotFound: '*',
+      Modal: "modal",
+      NotFound: "*",
     },
   },
 };
