@@ -1,3 +1,5 @@
+//Program powstał na Wydziale Informatyki Politechniki Białostockiej
+
 import {
   createAsyncThunk,
   createEntityAdapter,

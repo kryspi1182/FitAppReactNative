@@ -3,7 +3,7 @@
  * https://reactnavigation.org/docs/deep-linking
  * https://reactnavigation.org/docs/configuring-links
  */
-
+//Program powstał na Wydziale Informatyki Politechniki Białostockiej
 import { LinkingOptions } from "@react-navigation/native";
 import * as Linking from "expo-linking";
 

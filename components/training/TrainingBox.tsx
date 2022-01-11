@@ -1,3 +1,5 @@
+//Program powstał na Wydziale Informatyki Politechniki Białostockiej
+
 import * as React from "react";
 import { EntityId } from "@reduxjs/toolkit";
 import { useSelector, useDispatch } from "react-redux";

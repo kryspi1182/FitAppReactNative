@@ -1,3 +1,5 @@
+//Program powstał na Wydziale Informatyki Politechniki Białostockiej
+
 import * as React from "react";
 import { List, Chip, Divider } from "react-native-paper";
 import { Button, Text, View, StyleSheet } from "react-native";
